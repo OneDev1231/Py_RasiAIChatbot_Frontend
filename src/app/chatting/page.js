@@ -1,6 +1,6 @@
 import React from 'react'
-import { SideBar } from '../../components/pages/home/components/SideBar'
-import { ChatBoxView } from '../../components/pages/home/components/ChatBoxView'
+import { SideBar } from '@/components/sidebar'
+import { ChatBoxView } from '@/components/chatbox'
 
 export default function chatting () {
   return (
