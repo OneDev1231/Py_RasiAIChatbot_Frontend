@@ -1,7 +1,7 @@
-import { HomePage } from "@/components/pages/home/HomePage";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
-    <HomePage />
+    redirect('/chatting')
   );
 }
