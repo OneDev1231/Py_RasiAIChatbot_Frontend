@@ -18,17 +18,32 @@ export const Search = () => {
   )
 }
 
+export const LeftHeader = () => {
+  return (
+    <div className="flex justify-between items-center bg-[#202c33] px-7 py-3">
+      <div className="flex items-center gap-4 cursor-pointer relative py-2">
+        <p className="text-white text-xl font-semibold">Chats</p>
+      </div>
+      <div className="flex gap-6 items-center">
+       
+      </div>
+    </div>
+  )
+}
 
 export const SideBar = () => {
   return (
-    <div className="py-2 fixed w-[30%]" id="leftbar">
+    <div>
+      <LeftHeader />
+      <div className="py-2 fixed w-[26%]" id="leftbar">
         <Search />
         <div className="mt-5">
             <p className="text-white px-5">
-                Friends
+                Customers
             </p>
             <Users usersData={users} />
         </div>
+      </div>
     </div>
   )
 }

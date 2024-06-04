@@ -20,7 +20,7 @@ export const messagesData = [
     {
         id: 4,
         me: true,
-        message: 'Hiii',
+        message: 'Hi',
         createdAt: "Fri May 31 2024 16:45:30 GMT+0530"
     },
 ]

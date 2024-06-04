@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    margin: 0;
+    font-family: sans-serif;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: gray;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
