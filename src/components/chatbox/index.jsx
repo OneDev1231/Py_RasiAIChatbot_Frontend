@@ -12,16 +12,16 @@ const style2 = 'self-end bg-[#005c4b] px-3 py-2 rounded-lg max-w-[50%]  rounded-
 
 export const RightHeader = () => {
   return (
-    <div className="flex justify-between items-center bg-[#202c33] px-7 py-3 border-l border-transparent border-l-gray-700">
+    <div className="flex justify-between items-center bg-gray-200 dark:bg-[#202c33] px-7 py-3 border-l border-transparent">
       <div className="flex items-center gap-4 cursor-pointer">
         <div className="w-11 h-11 rounded-full overflow-hidden">
-          <img src="https://avatars.githubusercontent.com/u/101309469?v=4" alt="logo" 
+          <img src="https://imgtr.ee/images/2024/06/06/ec689bac4544ec8bb86b50c23484b1c2.png" alt="logo" 
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-white text-xl">{ "userName" }</p>
+        <p className="text-xl">{ "userName" }</p>
       </div>
-      <div className="text-white cursor-pointer">
+      <div className="cursor-pointer">
         <SlOptionsVertical />
       </div>
     </div>
@@ -30,7 +30,7 @@ export const RightHeader = () => {
 
 export const ChatBox = ({messages}) => {
   return (
-    <div className="flex flex-col-reverse gap-4 h-full px-20 overflow-y-auto py-6">
+    <div className="flex flex-col-reverse gap-4 px-20 overflow-y-auto py-6">
       { !messages?.length && 
         <p className="text-gray-300 text-center">Start messaging!</p> 
       }
@@ -48,17 +48,15 @@ export const ChatBox = ({messages}) => {
 
 export const MessageComposer = ({handleChangeText, text, handleSendMessage}) => {
   return (
-    <div className="bg-[#202c33] fixed bottom-0 w-full">
+    <div className="bg-gray-200 dark:bg-[#202c33] w-full">
       <form onSubmit={handleSendMessage}>
-        <div className="px-8 py-3 flex items-center gap-4">
-          <div className="w-[66%] flex items-center gap-4">
-            <GrAttachment className='text-gray-300 text-2xl cursor-pointer' />
-            <input type="text" placeholder="Type a message" 
-              className="px-5 py-3 bg-[#2a3942] rounded-lg w-full outline-none text-white"
-              onChange={handleChangeText} value={text}
-            />
-          </div>
-          <div className="text-gray-400 text-3xl cursor-pointer"
+        <div className="px-6 py-3 flex flex-row justify-between items-center gap-4">
+          <GrAttachment className='text-gray-500 dark:text-gray-300 text-2xl cursor-pointer' />
+          <input type="text" placeholder="Type a message" 
+            className="px-5 py-3 rounded-lg w-full outline-none"
+            onChange={handleChangeText} value={text}
+          />
+          <div className=" text-3xl cursor-pointer"
             type='submit' onClick={handleSendMessage}
           >
             <IoMdSend />
@@ -79,20 +77,27 @@ export const ChatBoxView = () => {
     }
 
     const handleSendMessage = (e) => {
-        e.preventDefault();
-        const msg = {
-            id,
-            me: true,
-            message: text,
-            createdAt: new Date()
-        }
-        setData([msg, ...data]);
-        setText('');
+      e.preventDefault();
+      if (!text) {
+          toast.dismiss();
+          toast.error('Enter any message!');
+          return;
+      }
+      const msg = {
+          id,
+          me: true,
+          message: text,
+          createdAt: new Date()
+      }
+      id++;
+      setData([msg, ...data]);
+      setText('');
     }
 
     return (
-      <div className="relative" id="rightbar">
-        <div className="w-full h-[90vh]">
+      <div className="relative h-full flex flex-col justify-between" id="rightbar">
+        <RightHeader />
+        <div className="flex flex-col justify-end w-full h-full bg-gray-300 dark:bg-black">
           <ChatBox messages={data} />
           <MessageComposer handleChangeText={handleChangeText} handleSendMessage={handleSendMessage} 
               text={text}

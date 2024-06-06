@@ -3,7 +3,7 @@ import { Input, Button } from '@/components/elements';
 import { signup } from '@/services/auth/auth';
 import Link from 'next/link';
 import React, {useState} from 'react';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation';
 
 export default function SignupPage () {
@@ -21,6 +21,11 @@ export default function SignupPage () {
         setPassword(event.target.value);
     };
 
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     };
@@ -28,12 +33,18 @@ export default function SignupPage () {
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        try {
+        if (isValidEmail(email)) {
             const response = await signup(userName, email, password);
-            toast.success('Signup successful');
-            router.push('/auth/signin');
-        } catch (error) {
-            toast.error(error);
+            if (response.success) {
+                toast.success(response.data);
+                router.push('/auth/signin')
+            }
+            else {
+                toast.error(response.data)
+            }
+        }
+        else {
+            toast.error("Email is not valid.")
         }
     };
 

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, {useState} from 'react'
 import { signin } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast'
 
 export default function LoginPage () {
     const [email, setEmail] = useState('');
@@ -20,12 +21,13 @@ export default function LoginPage () {
 
     const handleSignin = async (e) => {
         e.preventDefault();
-        try {
-            const response = await signin(email, password);
-            console.log('Signin successful:', response);
+        const response = await signin(email, password);
+        if (response.success) {
+            toast.success(response.data);
             router.push('/dashboard')
-        } catch (error) {
-            console.error('Error during signin:', error.message);
+        }
+        else {
+            toast.error(response.data)
         }
     };
 
