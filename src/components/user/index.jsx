@@ -19,7 +19,7 @@ export const SingleUser = ({id, name}) => {
 export const Users = ({usersData}) => {
   return (
     <div>
-      <div className="py-2 flex flex-col gap-1 overflow-y-scroll max-h-[75vh]">
+      <div className="py-2 flex flex-col gap-1 overflow-y-auto max-h-[75vh]">
         { usersData.map(({ id, name }) => {
           return (
               <div key={id}>

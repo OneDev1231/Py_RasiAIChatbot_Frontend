@@ -1,11 +1,12 @@
 import React from 'react'
 import { Menu } from '@/components/menu'
+import { Navbar } from '@/components/navbar'
 
 export default function analytics () {
   return (
-    <div>
+    <div className='flex flex-row justify-start'>
       <Menu />
-      <h1>Hello This is analytics page</h1>
+      <Navbar />
     </div>
   )
 }

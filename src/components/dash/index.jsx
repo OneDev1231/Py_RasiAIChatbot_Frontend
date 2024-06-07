@@ -1,78 +1,41 @@
 "use client"
-import React, { useState } from 'react'
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import { Button, Input } from '@/components/elements'
+import React, { useState } from 'react';
+import { Button } from '@/components/elements';
+import { selectChatBot } from '@/lib/features/dashboardSlice';
+import { useBotDispatch, useBotSelector } from '@/lib/hooks/rtk_hooks';
 
-const workspaces = [
-    {
-        id: 1,
-        name: "SalesAI",
-    },
-    {
-        id: 2,
-        name: "Project 2",
-    },
-    {
-        id: 3,
-        name: "Project 3",
-    },
-    {
-        id: 4,
-        name: "Project 4",
-    },
-]
-
-export const AddWorkspace = ({onClose}) => {
-    return (
-      <div className='fixed left-0 top-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50' >
-          <div className='w-[30%] bg-white rounded-md p-5'>
-              <p className='text-center text-2xl font-semibold'>Add new Workspace</p>
-  
-              <div className='py-5 flex flex-col gap-5'>
-                  <Input type='text' placeholder='Workspace name' className='w-full' />
-  
-                  <Button className='w-full' onClick={onClose}>
-                      Add Workspace
-                  </Button>
-              </div>
-          </div>
-      </div>
-    )
-}
-  
 
 export const LeftBar = () => {
-    const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
-    const [openDropDown, setOpenDropDown] = useState(false);
+    const {selectedChatbot, chatbots} = useBotSelector(state => state.dashboard);
 
+    const dispatch = useBotDispatch();
+
+    const handleSelect = (item) => {
+        if (item.id === selectedChatbot?.id) {
+            dispatch(selectChatBot(null));
+            return;
+        }
+        dispatch(selectChatBot(item));
+    }
+    
     return (
-        <div>
-            <div className='px-3 py-4 bg-gray-600 select-none'>
-                <div className='flex justify-center items-center gap-2 cursor-pointer'>
-                    <p className='text-white flex items-center gap-2' onClick={() => setOpenDropDown(!openDropDown)}>
-                        {selectedWorkspace.name}
-                        { openDropDown ? <FaAngleUp /> : <FaAngleDown /> }
-                    </p>
-
-                    { openDropDown && <div className='absolute top-12 bg-gray-500 pb-1 rounded-md'>
-                        {
-                            workspaces.map((item) => {
-                                if (item.id === selectedWorkspace.id) return null;
-                                return (
-                                    <div key={item.id} className='px-5 cursor-pointer hover:bg-gray-300 duration-300 transition-all'
-                                        onClick={() => {
-                                            setSelectedWorkspace(item)
-                                            setOpenDropDown(false);
-                                        }}
-                                    >
-                                        <p className='text-gray-100 hover:text-black duration-300 transition-all'>{item.name}</p>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div> }
-                </div>
-            </div>
+        <div className='overflow-y-auto h-[91vh] border-r'>
+            {
+                !chatbots.length && <p className='text-lg p-4 text-center text-gray-800 dark:text-gray-200'>Please add a chatbot !</p> 
+            }
+            {
+                chatbots.map((item) => {
+                    return (
+                        <div key={item.id} className={`flex items-center gap-1 py-4 px-8 border-b-2 cursor-pointer transition-all duration-100 ${selectedChatbot?.id === item.id ? 'bg-blue-500 hover:bg-blue-600': 'hover:bg-gray-400'}`}
+                            onClick={() => {
+                                handleSelect(item);
+                            }}
+                        >
+                            <p className={`${selectedChatbot?.id === item.id ? 'text-white': ''} text-gray-800 dark:text-gray-200`}>{item.text}</p>
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }

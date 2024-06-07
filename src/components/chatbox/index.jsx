@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useState } from 'react'
-import { messagesData } from '@/data/messsages'
+import React, { useState } from 'react';
 import { IoMdSend } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { SlOptionsVertical } from "react-icons/sl";
+import { useBotDispatch, useBotSelector } from '@/lib/hooks/rtk_hooks';
+import { addChat } from '@/lib/features/dashboardSlice';
 
 const style1 = 'self-start bg-[#202c33] px-3 py-2 rounded-lg max-w-[50%] rounded-tl-none relative'
 const style2 = 'self-end bg-[#005c4b] px-3 py-2 rounded-lg max-w-[50%]  rounded-tr-none relative'
@@ -28,17 +29,19 @@ export const RightHeader = () => {
   )
 }
 
-export const ChatBox = ({messages}) => {
+export const ChatBox = () => {
+  const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
+
   return (
     <div className="flex flex-col-reverse gap-4 px-20 overflow-y-auto py-6">
-      { !messages?.length && 
-        <p className="text-gray-300 text-center">Start messaging!</p> 
+      { !selectedChatbot?.messages?.length && 
+        <p className="text-center">Start messaging!</p> 
       }
-      { messages?.map(({ me, message, createdAt, id}) => {
+      { selectedChatbot?.messages?.map((item) => {
         return (
-          <div key={id} className={me ? style2: style1}>
-            <p className={`text-white`}>{ message }</p>
-            <p className="text-[11px] text-zinc-300 text-right">{ new Date(createdAt).toString().slice(0, 16) }</p>
+          <div key={item?.id} className={item?.me ? style2: style1}>
+            <p className={`text-white`}>{ item?.message }</p>
+            <p className="text-[11px] text-zinc-300 text-right">{ new Date(item?.createdAt).toString().slice(0, 16) }</p>
           </div>
         )
       })}
@@ -70,13 +73,16 @@ export const MessageComposer = ({handleChangeText, text, handleSendMessage}) => 
 let id = 5;
 
 export const ChatBoxView = () => {
-    const [data, setData] = useState(messagesData);
-    const [text, setText] = useState('');
-    const handleChangeText = (e) => {
-        setText(e.target.value);
-    }
+  const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
+  const [text, setText] = useState('');
 
-    const handleSendMessage = (e) => {
+  const dispatch = useBotDispatch();
+
+  const handleChangeText = (e) => {
+      setText(e.target.value);
+  }
+
+  const handleSendMessage = (e) => {
       e.preventDefault();
       if (!text) {
           toast.dismiss();
@@ -90,15 +96,15 @@ export const ChatBoxView = () => {
           createdAt: new Date()
       }
       id++;
-      setData([msg, ...data]);
+      dispatch(addChat({id: selectedChatbot?.id, info: msg}))
       setText('');
-    }
+  }
 
     return (
       <div className="relative h-full flex flex-col justify-between" id="rightbar">
         <RightHeader />
         <div className="flex flex-col justify-end w-full h-full bg-gray-300 dark:bg-black">
-          <ChatBox messages={data} />
+          <ChatBox />
           <MessageComposer handleChangeText={handleChangeText} handleSendMessage={handleSendMessage} 
               text={text}
           />

@@ -12,7 +12,7 @@ body {
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: gray;
+    background-color: #A0AEC0;
   }
   
   html {

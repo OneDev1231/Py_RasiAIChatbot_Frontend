@@ -5,12 +5,12 @@ import { Menu } from '@/components/menu'
 
 export default function chatting () {
   return (
-    <div className="w-screen h-screen bg-gray-200 dark:bg-black flex">
+    <div className="h-screen bg-gray-200 dark:bg-black flex flex-row justify-start">
       <Menu />
-      <div className="w-[30%] h-full bg-gray-300 dark:bg-[#111b21] pl-12 border-r dark:border-r-0">
+      <div className="w-1/4 h-full bg-gray-300 dark:bg-[#111b21] border-r dark:border-r-0">
         <SideBar />
       </div>
-      <div className="w-[70%] h-full">
+      <div className="w-3/4 h-full">
         <ChatBoxView />
       </div>
     </div>
