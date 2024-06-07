@@ -6,6 +6,7 @@ import { Navbar } from '@/components/navbar'
 import { useBotSelector } from '@/lib/hooks/rtk_hooks';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/elements'
+import { FaPlus } from 'react-icons/fa'
 
 export default function dashboard () {
 
@@ -13,15 +14,21 @@ export default function dashboard () {
   const router = useRouter();
 
   return (
-    <div className='h-screen flex flex-row justify-stretch'>
+    <div className='h-screen flex flex-row'>
       <Menu />
-      <div className='h-full w-full flex flex-col justify-start gap-2'>
+      <div className='flex-1 flex flex-col gap-2'>
         <Navbar />
-        <div className='flex flex-row justify-stretch'>
-          <div className='w-[20%] h-full'>
+        <div className='flex-1 flex flex-row overflow-hidden'>
+          <div className='w-1/5 flex flex-col justify-start items-stretch gap-2 px-2 overflow-y-auto'>
+            <Button className='flex items-center gap-2 py-4 px-4 border-b-2 cursor-pointer transition-all duration-100'
+                onClick={() => router.push('/dashboard/create_chatbot')}
+            >
+              <FaPlus />
+              Add Chatbot
+            </Button>
             <LeftBar />
           </div>
-          <div className='w-[80%] h-full shadow-lg flex flex-col justify-between'>
+          <div className='w-4/5 shadow-lg flex flex-col justify-between overflow-y-auto'>
             
             { selectedChatbot ? (
               <>

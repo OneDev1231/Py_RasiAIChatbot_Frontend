@@ -19,7 +19,7 @@ export const LeftBar = () => {
     }
     
     return (
-        <div className='overflow-y-auto h-[91vh] border-r'>
+        <div className='h-full flex flex-col overflow-y-auto border-r'>
             {
                 !chatbots.length && <p className='text-lg p-4 text-center text-gray-800 dark:text-gray-200'>Please add a chatbot !</p> 
             }

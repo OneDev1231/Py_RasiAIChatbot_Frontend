@@ -24,7 +24,7 @@ export const Navbar = () => {
     }
 
     return (
-        <nav className='w-full z-20'>
+        <nav className='w-full'>
             <div className='px-8 py-3 select-none shadow-sm flex justify-between gap-5 bg-gray-200 dark:bg-gray-900'>
                 <div className='flex items-center'>
                     <p className='text-2xl font-semibold'>
