@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { Button, Input } from "@/components/elements";
 import { Navbar } from "@/components/navbar";
 import { Menu } from "@/components/menu";
+import withAuth from "@/services/auth/hoc";
 
-export default function about () {
+const about = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -54,4 +55,6 @@ export default function about () {
         </div>
         
     )
-}
+};
+
+export default withAuth(about);

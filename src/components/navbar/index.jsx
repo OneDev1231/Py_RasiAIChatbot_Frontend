@@ -1,26 +1,37 @@
 "use client"
 import React from 'react';
 import { Button } from '../elements';
-import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { useTheme } from 'next-themes';
-import { FaPlus } from 'react-icons/fa';
+import { createClient } from '@supabase/supabase-js';
 import { usePathname, useRouter } from 'next/navigation';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 export const Navbar = () => {
-    const { theme, setTheme } = useTheme();
     const pathName = usePathname().slice(1).split('/').shift();
 
     const router = useRouter();
-
-    const handleSignout = async (e) => {
-        e.preventDefault();
-        response = await signout();
-        if (response) {
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY);
+    const handleSignout = async () => {
+        
+        console.log(await supabase.auth.signOut());
+        try {
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/signout`,
+              {},
+              { withCredentials: true }  // Ensure cookies are sent with the request
+            );
+      
+            if (response.status !== 200) {
+              throw new Error('Signout failed');
+            }
+            Cookies.remove('access_token')
+            Cookies.remove('refresh_token')
             router.push('/auth/signin');
-        }
-        else {
-            toast.error("Signout failed!")
-        }
+          } catch (error) {
+            console.error('Failed to sign out', error);
+            toast.error('Failed to sign out')
+          }
     }
 
     return (
@@ -33,7 +44,7 @@ export const Navbar = () => {
                 </div>
                 <div className='flex gap-5 items-center'>
                     <div>
-                        <Button className='bg-red-500' onClick={() => router.push('/auth/signin')}>
+                        <Button className='bg-red-500' onClick={handleSignout}>
                             Signout
                         </Button>
                     </div>

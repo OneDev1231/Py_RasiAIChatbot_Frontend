@@ -7,8 +7,9 @@ import { useBotSelector } from '@/lib/hooks/rtk_hooks';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/elements'
 import { FaPlus } from 'react-icons/fa'
+import withAuth from '@/services/auth/hoc'
 
-export default function dashboard () {
+const dashboard = () => {
 
   const {selectedChatbot} = useBotSelector(state => state.dashboard);
   const router = useRouter();
@@ -63,4 +64,6 @@ export default function dashboard () {
       </div>
     </div>
   )
-}
+};
+
+export default withAuth(dashboard);

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const signin = async (email, password) => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, { email, password });
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, { email, password }, { withCredentials: true });
         console.log(response.data)
         if (typeof response.data.status == 'undefined')
             return {success: true, data: "Login is successful!"}
@@ -26,17 +26,5 @@ export const signup = async (userName, email, password) => {
             return { success: false, data: response.data.message}
     } catch (error) {
         return { success: false, data: "Request Failed"};
-    }
-};
-
-export const signout = async () => {
-    try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sigout`);
-        if (typeof response.data.status == 'undefined')
-            return true
-        else
-            return false
-    } catch (error) {
-        return false;
     }
 };

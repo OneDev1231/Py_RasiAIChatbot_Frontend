@@ -2,8 +2,9 @@ import React from 'react'
 import { SideBar } from '@/components/sidebar'
 import { ChatBoxView } from '@/components/chatbox'
 import { Menu } from '@/components/menu'
+import withAuth from '@/services/auth/hoc'
 
-export default function chatting () {
+const chatting = () => {
   return (
     <div className="h-screen bg-gray-200 dark:bg-black flex flex-row justify-start">
       <Menu />
@@ -16,3 +17,5 @@ export default function chatting () {
     </div>
   )
 }
+
+export default withAuth(chatting);

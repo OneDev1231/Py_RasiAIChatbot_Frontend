@@ -4,6 +4,7 @@ import { Button, Input } from "@/components/elements";
 import { Menu } from "@/components/menu";
 import { addChatbot } from "@/lib/features/dashboardSlice";
 import { useBotDispatch } from "@/lib/hooks/rtk_hooks";
+import withAuth from "@/services/auth/hoc";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -121,4 +122,4 @@ const CreateChatbotPage = () => {
     )
 }
 
-export default CreateChatbotPage
+export default withAuth(CreateChatbotPage);
