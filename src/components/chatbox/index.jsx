@@ -96,7 +96,7 @@ export const ChatBoxView = () => {
           createdAt: new Date()
       }
       id++;
-      dispatch(addChat({id: selectedChatbot?.id, info: msg}))
+      // dispatch(addChat({id: selectedChatbot?.id, info: msg}))
       setText('');
   }
 

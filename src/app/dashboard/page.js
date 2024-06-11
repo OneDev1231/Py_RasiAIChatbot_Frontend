@@ -1,18 +1,51 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LeftBar } from '@/components/dash'
 import { Menu } from '@/components/menu'
 import { Navbar } from '@/components/navbar'
-import { useBotSelector } from '@/lib/hooks/rtk_hooks';
+import { useBotDispatch, useBotSelector } from '@/lib/hooks/rtk_hooks';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/elements'
 import { FaPlus } from 'react-icons/fa'
 import withAuth from '@/services/auth/hoc'
+import { existing_chatbot_upsert_file } from '@/services/chatbot/upsert'
+import { setSlice, updateChatbot } from '@/lib/features/dashboardSlice'
+import { getChatbots } from '@/services/chatbot/get-chatbots'
 
 const dashboard = () => {
 
   const {selectedChatbot} = useBotSelector(state => state.dashboard);
+  const dispatch = useBotDispatch();
   const router = useRouter();
+  const [uploading, setUploading] = useState(false);
+  const [status, setStatus] = useState("");
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getChatbots();
+      dispatch(setSlice(response));
+    }
+    fetchData();
+  }, [dispatch]);
+
+  const handleFileChange = async (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    console.log(file.name)
+    // setUploading(true);
+    setStatus("Uploading...");
+    try {
+      await existing_chatbot_upsert_file(selectedChatbot.name, file);
+      dispatch(updateChatbot({id: selectedChatbot?.id, newFile: file.name}));
+      setStatus("File uploaded successfully!");
+    } catch (error) {
+      console.log(error)
+      setStatus("Error uploading files!");
+    }    
+  };
 
   return (
     <div className='h-screen flex flex-row'>
@@ -46,8 +79,23 @@ const dashboard = () => {
                     </div>                    
                   </div>
                 </div>
-                <div className='flex justify-center'>
-                      <Button>Upsert File</Button>
+                <div className='flex flex-col justify-center items-center gap-3'>
+                      {/* <Button onClick={handleFileChange}>Upsert File</Button> */}
+                      <div>
+                        <label 
+                            className='bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer'
+                            htmlFor="file-upload"
+                        >
+                            Upsert File
+                        </label>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            onChange={handleFileChange}
+                            style={{ display: 'none' }}
+                        />
+                      </div>
+                      <div>{status}</div>
                 </div>
                 <div className='flex justify-end pb-10 px-10'>
                   <Button onClick={() => router.push('/chatting')}>

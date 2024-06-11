@@ -1,120 +1,32 @@
-import { messagesData } from '@/data/messsages';
 import { createSlice } from '@reduxjs/toolkit'
 
-let id = 16;
-const chatbots = [
-    {
-        id: 1, 
-        text: 'Chatbot 1',
-        files: ["test.docx"],
-        messages: messagesData
-    },
-    {
-        id: 2, 
-        text: 'Chatbot 2',
-        files: ["test.pdf", "test.json"],
-        messages: messagesData
-    },
-    {
-        id: 3, 
-        text: 'Chatbot 2',
-        files: ["test.csv", "test.pdf", "test.docx"],
-        messages: messagesData
-    },
-    {
-        id: 4, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 5, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 6, 
-        text: 'Chatbot 1',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 7, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 8, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 9, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 10, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 11, 
-        text: 'Chatbot 1',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 12, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 13, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 14, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 15, 
-        text: 'Chatbot 2',
-        files: [],
-        messages: messagesData
-    },
-    {
-        id: 16, 
-        text: 'Chatbot 1',
-        files: [],
-        messages: messagesData
-    },
-]
-
 const initialState = {
-    chatbots: chatbots || [],
-    selectedChatbot: chatbots[0]
+    chatbots: [],
+    selectedChatbot: null,
 }
 
 export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
+    setSlice: (state, action) => {
+      const data = action.payload.map((item) => ({
+        id: item.id,
+        name: item.chatbotName,
+        phone: item.phone,
+        files: item.upsert_filelist,
+        customers: item.customerID,
+        prompt: item.prompt,
+      }))
+      state.chatbots = data;
+      state.selectedChatbot = data[0];
+    },
     addChatbot: (state, action) => {
         const data = {
-            id: id++,
+            id: state.selectedChatbot.id++,
             ...action.payload,
-            messages: []
+            phone: null,
+            customers: [],
         }
         state.chatbots.push(data);
         state.selectedChatbot = data;
@@ -122,18 +34,18 @@ export const dashboardSlice = createSlice({
     selectChatBot: (state, action) => {
         state.selectedChatbot = action.payload;
     },
-    addChat: (state, action) => {
-        const {id, info} = action.payload;
-        state.chatbots.forEach((item) => {
-            if (item.id === id) {
-                item.messages = [info, ...item.messages];
-                state.selectedChatbot = item;
+    updateChatbot: (state, action) => {
+        const {id, newFile} = action.payload;
+        state.chatbots.forEach((chatbot) => {
+            if (chatbot.id == id) {
+                chatbot.files.push(newFile);
+                state.selectedChatbot = chatbot
             }
         });
     }
   }
 })
 
-export const { addChatbot, selectChatBot, addChat } = dashboardSlice.actions
+export const { addChatbot, selectChatBot, updateChatbot, setSlice } = dashboardSlice.actions
 
 export default dashboardSlice.reducer

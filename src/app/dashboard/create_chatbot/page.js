@@ -15,7 +15,8 @@ import { GoDotFill } from "react-icons/go";
 const CreateChatbotPage = () => {
     const [page, setPage] = useState(1);
     const [data, setData] = useState({
-        text: '',
+        name: '',
+        prompt: '',
         files: []
     })
     const inputRef = useRef(null);
@@ -25,7 +26,7 @@ const CreateChatbotPage = () => {
     const handleTextChange = (e) => {
         setData({
             ...data,
-            text: e.target.value
+            prompt: e.target.value
         })
     }
 
