@@ -12,7 +12,7 @@ import { existing_chatbot_upsert_file } from '@/services/chatbot/upsert'
 import { setSlice, updateChatbot } from '@/lib/features/dashboardSlice'
 import { getChatbots } from '@/services/chatbot/get-chatbots'
 
-const dashboard = () => {
+const Dashboard = () => {
 
   const {selectedChatbot} = useBotSelector(state => state.dashboard);
   const dispatch = useBotDispatch();
@@ -120,4 +120,4 @@ const dashboard = () => {
   )
 };
 
-export default withAuth(dashboard);
+export default withAuth(Dashboard);

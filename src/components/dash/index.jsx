@@ -39,18 +39,3 @@ export const LeftBar = () => {
         </div>
     )
 }
-
-export const RightBar = () => {
-    const [openModal, setOpenModal] = useState(false);
-
-    return (
-        <div>
-            <div className='px-3 py-2  select-none shadow-md flex justify-end'>
-                <Button onClick={() => setOpenModal(true)}>
-                    Add Workspace
-                </Button>
-            </div>
-            { openModal && <AddWorkspace onClose={() => setOpenModal(false)} /> }
-        </div>
-    )
-}

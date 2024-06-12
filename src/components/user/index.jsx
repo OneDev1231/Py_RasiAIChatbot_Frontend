@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
 
 export const SingleUser = ({id, name}) => {
   return (
     <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-800 px-5 duration-200">
         <div className="w-11 h-11 rounded-full overflow-hidden">
-            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-james-wheeler-414612.jpg&fm=jpg" alt="logo" 
+            <Image src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-james-wheeler-414612.jpg&fm=jpg" alt="logo" 
                 className="w-full h-full object-cover"
             />  
         </div>
