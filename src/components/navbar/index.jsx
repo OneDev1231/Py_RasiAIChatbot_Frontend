@@ -3,8 +3,6 @@ import React from 'react';
 import { Button } from '../elements';
 import { createClient } from '@supabase/supabase-js';
 import { usePathname, useRouter } from 'next/navigation';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
 export const Navbar = () => {
@@ -15,23 +13,11 @@ export const Navbar = () => {
     const handleSignout = async () => {
         
         console.log(await supabase.auth.signOut());
-        try {
-            const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/signout`,
-              {},
-              { withCredentials: true }  // Ensure cookies are sent with the request
-            );
-      
-            if (response.status !== 200) {
-              throw new Error('Signout failed');
-            }
-            Cookies.remove('access_token')
-            Cookies.remove('refresh_token')
-            router.push('/auth/signin');
-          } catch (error) {
-            console.error('Failed to sign out', error);
-            toast.error('Failed to sign out')
-          }
+        Cookies.remove('access_token')
+        console.log(Cookies.get('access_token'))
+        Cookies.remove('refresh_token')
+        console.log(Cookies.get('refresh_token'))
+        router.push('/auth/signin');
     }
 
     return (
