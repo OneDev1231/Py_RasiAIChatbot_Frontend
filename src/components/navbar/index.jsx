@@ -14,9 +14,7 @@ export const Navbar = () => {
         
         await supabase.auth.signOut();
         Cookies.remove('access_token', { path: '/', domain: '.rasi.ai', secure: true })
-        console.log(Cookies.get('access_token'))
         Cookies.remove('refresh_token', { path: '/', domain: '.rasi.ai', secure: true })
-        console.log(Cookies.get('refresh_token'))
         router.push('/auth/signin');
     }
 
