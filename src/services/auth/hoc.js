@@ -1,11 +1,10 @@
 "use client"
-import { useRouter, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const withAuth = WrappedComponent => {
     return props => {
-        const router = useRouter();
         const [verified, setVerified] = useState(false);
 
         useEffect(()=> {

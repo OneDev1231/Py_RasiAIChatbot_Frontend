@@ -1,10 +1,10 @@
 import axios from 'axios';
-import toast from 'react-hot-toast';
 
-export const existing_chatbot_upsert_file = async (chatbotName, uploadedFile) => {
+export const add_new_chatbot = async (chatbot_data) => {
     const formData = new FormData();
-    formData.append("file", uploadedFile);
-    formData.append("chatbotName", chatbotName);
+    formData.append("name", chatbot_data.name);
+    formData.append("prompt", chatbot_data.prompt);
+    formData.append("files", chatbot_data.files);
 
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upsert_file`, formData, {

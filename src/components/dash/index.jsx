@@ -19,14 +19,14 @@ export const LeftBar = () => {
     }
     
     return (
-        <div className='h-full flex flex-col overflow-y-auto border-r gap-2'>
+        <div className='h-full flex flex-col overflow-y-auto border-r gap-1'>
             {
                 !chatbots.length && <p className='text-lg p-4 text-center text-gray-800 dark:text-gray-200'>Please add a chatbot</p> 
             }
             {
                 chatbots.map((item) => {
                     return (
-                        <div key={item.id} className={`flex items-center gap-1 py-2 px-8 border-b-2 cursor-pointer transition-all duration-100 ${selectedChatbot?.id === item.id ? 'bg-blue-500 hover:bg-blue-600': 'hover:bg-gray-400'}`}
+                        <div key={item.id} className={`flex items-center justify-center gap-1 py-2 px-8 border-b-2 cursor-pointer transition-all duration-100 ${selectedChatbot?.id === item.id ? 'bg-blue-500 hover:bg-blue-600': 'hover:bg-gray-400'}`}
                             onClick={() => {
                                 handleSelect(item);
                             }}

@@ -11,27 +11,40 @@ import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa";
 import { GoDot } from "react-icons/go";
 import { GoDotFill } from "react-icons/go";
+import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
 
 const CreateChatbotPage = () => {
     const [page, setPage] = useState(1);
+    const [status, setStatus] = useState("");
     const [data, setData] = useState({
         name: '',
         prompt: '',
-        files: []
+        files: [],
     })
     const inputRef = useRef(null);
     const dispatch = useBotDispatch();
     const router = useRouter();
 
-    const handleTextChange = (e) => {
+    const handlePromptChange = (e) => {
         setData({
             ...data,
             prompt: e.target.value
         })
     }
-
+    const handleNameChange = (e) => {
+        setData({
+            ...data,
+            name: e.target.value
+        })
+    }
     const handleNext = () => {
-        if(!data.text) {
+        if(!data.name && page == 1) {
+            toast.dismiss();
+            toast.error('Please enter the bot name!');
+            return;
+        }
+
+        if(!data.prompt && page == 2) {
             toast.dismiss();
             toast.error('Please enter a purpose!');
             return;
@@ -40,21 +53,36 @@ const CreateChatbotPage = () => {
             ...data,
             files: []
         })
-        setPage(2);
+        setPage(page+1);
     }
-
-    const handleOpenFiles = () => {
-        inputRef.current?.click();
-    }
-
-    const handleUpsertChange = (e) => {
+    const handleUpsertChange = async (event) => {
+        event.preventDefault();
+        const file = event.target.files[0];
+    
+        if(!file) return;
+    
+        console.log(file.name)
         setData({
             ...data,
-            files: e.target.files
+            files: data.files.push(file)
         })
+        console.log(data)
     }
-
-    const handleAddChatbot = () => {
+    const handleAddChatbot = async () => {
+        try {
+            const response = await add_new_chatbot(data);
+            console.log(response)
+            if (response == 200) {
+              dispatch(addChatbot({name: data.name, prompt: data.prompt, files: data.files}));
+              setStatus("File uploaded successfully!");
+            }
+            else {
+              setStatus("Error uploading file");
+            }
+          } catch (error) {
+            console.log(error)
+            setStatus("Error uploading file!");
+          }    
         if (!data.files.length) {
             toast.dismiss();
             toast.error('Please upsert atlease 1 file!');
@@ -64,7 +92,9 @@ const CreateChatbotPage = () => {
         router.push('/dashboard');
     }
     const handleReturn = () => {
-        setPage(1);
+        if (page != 1) {
+            setPage(page-1);
+        }
     }
 
     return (
@@ -80,13 +110,18 @@ const CreateChatbotPage = () => {
                     </div>
                     <div className="flex flex-col">
                         { page === 1 && <div className="flex flex-col gap-4">
-                            <label className="text-gray-700 dark:text-gray-200">The purpose of this chatbot</label>
-                            <textarea id='multiline-input' type='text' className="w-full h-40 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Type here..." value={data.text} 
-                                onChange={handleTextChange}
+                            <label className="text-gray-700 dark:text-gray-200">The name of this chatbot</label>
+                            <input type='text' className="w-full h-10 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Type here..." value={data.name} 
+                                onChange={handleNameChange}
                             />
                         </div> }
-
-                        { page === 2 && <div className="flex flex-col gap-2">
+                        { page === 2 && <div className="flex flex-col gap-4">
+                            <label className="text-gray-700 dark:text-gray-200">The purpose of this chatbot</label>
+                            <textarea id='multiline-input' type='text' className="w-full h-40 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Type here..." value={data.prompt} 
+                                onChange={handlePromptChange}
+                            />
+                        </div> }
+                        { page === 3 && <div className="flex flex-col gap-2 items-center">
                             <div className="flex flex-col justify-center gap-2 min-h-16">
                                 {
                                     data.files.length > 0 && Array.from(data.files).map((item, i) => {
@@ -95,22 +130,36 @@ const CreateChatbotPage = () => {
                                 }
                             </div>
 
-                            <div className="flex justify-center">
-                                <Button onClick={handleOpenFiles}>Upsert file</Button>
+                            <div>
+                                <label 
+                                    className='bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer'
+                                    htmlFor="file-upload"
+                                >
+                                    Upsert File
+                                </label>
+                                <input
+                                    id="file-upload"
+                                    type="file"
+                                    onChange={handleUpsertChange}
+                                    style={{ display: 'none' }}
+                                />
                             </div>
                         </div>}
+
 
                         <div className="flex flex-col justify-start">
                             <div className="flex justify-center mt-2">
                                 <div className="flex">
                                     { page === 1 ? <GoDotFill className="text-2xl" /> : <GoDot className="text-2xl" /> }
-                                    { page ===2 ? <GoDotFill className="text-2xl" /> : <GoDot className="text-2xl" /> }
-                                </div>
+                                    { page === 2 ? <GoDotFill className="text-2xl" /> : <GoDot className="text-2xl" /> }
+                                    { page === 3 ? <GoDotFill className="text-2xl" /> : <GoDot className="text-2xl" /> }
+                                </div>     
                             </div>
 
                             <div className="flex justify-end">
                                 { page === 1 && <Button onClick={handleNext}>Next</Button> }
-                                { page === 2 && <Button onClick={handleAddChatbot}>Complete</Button> }
+                                { page === 2 && <Button onClick={handleNext}>Next</Button> }
+                                { page === 3 && <Button onClick={handleAddChatbot}>Complete</Button> }
                             </div>
                         </div>
                     </div>

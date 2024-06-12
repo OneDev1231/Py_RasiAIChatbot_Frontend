@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 export const getChatbots = async () => {
     try {
         const response = await axios.post(
@@ -6,10 +7,16 @@ export const getChatbots = async () => {
             {},
             { withCredentials: true }
         );
-        const data = response.data;
-
-        return data
+        if (response.status == 200) {
+            const data = response.data;
+            return data
+        }
+        else {
+            toast.error(response.statusText);
+            return null
+        }
     } catch (error) {
+        toast.error(error.response.statusText);
         return { success: false, data: "Request Failed"};
     }
 };

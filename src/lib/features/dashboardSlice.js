@@ -22,8 +22,10 @@ export const dashboardSlice = createSlice({
       state.selectedChatbot = data[0];
     },
     addChatbot: (state, action) => {
+        const length = state.chatbots.length;
+        const lastId = state.chatbots[length-1].id;
         const data = {
-            id: state.selectedChatbot.id++,
+            id: lastId + 1,
             ...action.payload,
             phone: null,
             customers: [],

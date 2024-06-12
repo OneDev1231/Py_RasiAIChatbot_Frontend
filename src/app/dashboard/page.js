@@ -38,12 +38,18 @@ const dashboard = () => {
     // setUploading(true);
     setStatus("Uploading...");
     try {
-      await existing_chatbot_upsert_file(selectedChatbot.name, file);
-      dispatch(updateChatbot({id: selectedChatbot?.id, newFile: file.name}));
-      setStatus("File uploaded successfully!");
+      const response = await existing_chatbot_upsert_file(selectedChatbot.name, file);
+      console.log(response)
+      if (response == 200) {
+        dispatch(updateChatbot({id: selectedChatbot?.id, newFile: file.name}));
+        setStatus("File uploaded successfully!");
+      }
+      else {
+        setStatus("Error uploading file");
+      }
     } catch (error) {
       console.log(error)
-      setStatus("Error uploading files!");
+      setStatus("Error uploading file!");
     }    
   };
 
@@ -54,7 +60,7 @@ const dashboard = () => {
         <Navbar />
         <div className='flex-1 flex flex-row overflow-hidden'>
           <div className='w-1/5 flex flex-col justify-start items-stretch gap-2 px-2 overflow-y-auto'>
-            <Button className='flex items-center gap-2 py-4 px-4 border-b-2 cursor-pointer transition-all duration-100'
+            <Button className='flex items-center justify-center gap-2 border-b-2 cursor-pointer transition-all duration-100'
                 onClick={() => router.push('/dashboard/create_chatbot')}
             >
               <FaPlus />
@@ -104,7 +110,7 @@ const dashboard = () => {
                 </div>
               </>
             ) : (
-                <p className='text-lg p-4 text-center text-gray-500'>Please select a chat bot !</p>
+                <p className='text-lg p-4 text-center text-gray-500'>Please select a chatbot</p>
               )
             }    
           </div>
