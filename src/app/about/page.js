@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { Menu } from "@/components/menu";
 import withAuth from "@/services/auth/hoc";
 
-const about = () => {
+const About = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -57,4 +57,4 @@ const about = () => {
     )
 };
 
-export default withAuth(about);
+export default withAuth(About);

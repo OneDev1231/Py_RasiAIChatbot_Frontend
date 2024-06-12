@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const withAuth = WrappedComponent => {
-    return props => {
+    const Wrapper =  props => {
         const [verified, setVerified] = useState(false);
 
         useEffect(()=> {
@@ -23,6 +23,13 @@ const withAuth = WrappedComponent => {
             return null;
         }
     };
+    Wrapper.displayName = `withAuth(${getDisplayName(WrappedComponent)})`;
+
+    return Wrapper;
+};
+
+const getDisplayName = (WrappedComponent) => {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };
 
 export default withAuth;
