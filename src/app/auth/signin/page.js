@@ -4,7 +4,8 @@ import Link from 'next/link'
 import React, {useState} from 'react'
 import { signin } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 export default function LoginPage () {
     const [email, setEmail] = useState('');
@@ -24,6 +25,11 @@ export default function LoginPage () {
         const response = await signin(email, password);
         if (response.success) {
             toast.success(response.data);
+            const accessToken = Cookies.get('access_token');
+            console.log("Access Token:", accessToken); // Should not be undefined if cookie is present
+
+            const refreshToken = Cookies.get('refresh_token');
+            console.log("Refresh Token:", refreshToken);
             router.push('/dashboard')
         }
         else {

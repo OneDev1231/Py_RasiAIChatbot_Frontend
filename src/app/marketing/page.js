@@ -1,8 +1,10 @@
+"use client"
 import React from 'react'
 import { Menu } from '@/components/menu'
 import { Navbar } from '@/components/navbar'
+import withAuth from '@/services/auth/hoc'
 
-export default function Marketing () {
+const Marketing = () => {
   return (
     <div className='flex flex-row justify-start'>
       <Menu />
@@ -10,3 +12,5 @@ export default function Marketing () {
     </div>
   )
 }
+
+export default withAuth(Marketing)
