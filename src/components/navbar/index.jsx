@@ -12,10 +12,10 @@ export const Navbar = () => {
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY);
     const handleSignout = async () => {
         
-        console.log(await supabase.auth.signOut());
-        Cookies.remove('access_token')
+        await supabase.auth.signOut();
+        Cookies.remove('access_token', { path: '/', domain: '.rasi.ai', secure: true })
         console.log(Cookies.get('access_token'))
-        Cookies.remove('refresh_token')
+        Cookies.remove('refresh_token', { path: '/', domain: '.rasi.ai', secure: true })
         console.log(Cookies.get('refresh_token'))
         router.push('/auth/signin');
     }
