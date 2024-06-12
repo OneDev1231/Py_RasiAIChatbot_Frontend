@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu } from '@/components/menu'
 import { Navbar } from '@/components/navbar'
 
-export default function analytics () {
+export default function Analytics () {
   return (
     <div className='flex flex-row justify-start'>
       <Menu />
