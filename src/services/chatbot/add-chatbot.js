@@ -4,10 +4,12 @@ export const add_new_chatbot = async (chatbot_data) => {
     const formData = new FormData();
     formData.append("name", chatbot_data.name);
     formData.append("prompt", chatbot_data.prompt);
-    formData.append("files", chatbot_data.files);
+    chatbot_data.files.forEach((file) => {
+        formData.append("files", file); // Ensure files are appended correctly
+    });
 
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upsert_file`, formData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/add_chatbot`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },

@@ -14,7 +14,6 @@ export const Menu = () => {
     const [active, setActive] = useState('');
     const { theme, setTheme } = useTheme();
     const router = useRouter();
-    console.log({theme})
 
     useEffect(() => {
         setActive(router.pathname);

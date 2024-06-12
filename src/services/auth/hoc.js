@@ -8,10 +8,7 @@ const withAuth = WrappedComponent => {
         const [verified, setVerified] = useState(false);
 
         useEffect(()=> {
-            console.log(Cookies)
             const accessToken = Cookies.get('access_token');
-            console.log(accessToken);
-
             if(accessToken) {
                 setVerified(true);
             } else {

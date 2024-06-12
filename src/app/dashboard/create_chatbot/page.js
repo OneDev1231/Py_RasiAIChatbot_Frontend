@@ -62,40 +62,40 @@ const CreateChatbotPage = () => {
         if(!file) return;
     
         console.log(file.name)
-        setData({
-            ...data,
-            files: data.files.push(file)
-        })
-        console.log(data)
-    }
-    const handleAddChatbot = async () => {
-        try {
-            const response = await add_new_chatbot(data);
-            console.log(response)
-            if (response == 200) {
-              dispatch(addChatbot({name: data.name, prompt: data.prompt, files: data.files}));
-              setStatus("File uploaded successfully!");
-            }
-            else {
-              setStatus("Error uploading file");
-            }
-          } catch (error) {
-            console.log(error)
-            setStatus("Error uploading file!");
-          }    
-        if (!data.files.length) {
-            toast.dismiss();
-            toast.error('Please upsert atlease 1 file!');
-            return;
-        }
-        dispatch(addChatbot(data));
-        router.push('/dashboard');
+        setData((prevData) => ({
+            ...prevData,
+            files: [...prevData.files, file]
+        }));
     }
     const handleReturn = () => {
         if (page != 1) {
             setPage(page-1);
         }
     }
+    const handleAddChatbot = async (event) => {
+        event.preventDefault();
+        if (data.files.length == 0) {
+            toast.dismiss();
+            toast.error('Please upsert the files \n .docx, .pdf, .json, .csv are available');
+            return;
+        }
+        try {
+            const status_code = await add_new_chatbot(data);
+            console.log(status_code)
+            if (status_code == 200) {
+              dispatch(addChatbot({name: data.name, prompt: data.prompt, files: data.files.map(file => file.name)}));
+              toast.success("Chatbot is added successfully!")
+            }
+            else {
+              toast.error("Error creating chatbot");
+            }
+          } catch (error) {
+            console.log(error)
+            setStatus("Error sending request");
+          }
+        router.push('/dashboard');
+    }
+    
 
     return (
         <div className="h-screen flex flex-row">
@@ -124,7 +124,7 @@ const CreateChatbotPage = () => {
                         { page === 3 && <div className="flex flex-col gap-2 items-center">
                             <div className="flex flex-col justify-center gap-2 min-h-16">
                                 {
-                                    data.files.length > 0 && Array.from(data.files).map((item, i) => {
+                                    data.files.length > 0 && data.files.map((item, i) => {
                                         return <p key={i} className="text-center">{item.name}</p>
                                     })
                                 }
