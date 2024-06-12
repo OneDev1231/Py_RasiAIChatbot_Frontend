@@ -1,10 +1,11 @@
+"use client"
 import React from 'react'
 import { SideBar } from '@/components/sidebar'
 import { ChatBoxView } from '@/components/chatbox'
 import { Menu } from '@/components/menu'
 import withAuth from '@/services/auth/hoc'
 
-const chatting = () => {
+const Chatting = () => {
   return (
     <div className="h-screen bg-gray-200 dark:bg-black flex flex-row justify-start">
       <Menu />
@@ -18,4 +19,4 @@ const chatting = () => {
   )
 }
 
-export default withAuth(chatting);
+export default withAuth(Chatting);

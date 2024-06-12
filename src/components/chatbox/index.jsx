@@ -5,7 +5,7 @@ import { IoMdSend } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useBotDispatch, useBotSelector } from '@/lib/hooks/rtk_hooks';
-import Image from 'next/image';
+
 
 const style1 = 'self-start bg-[#202c33] px-3 py-2 rounded-lg max-w-[50%] rounded-tl-none relative'
 const style2 = 'self-end bg-[#005c4b] px-3 py-2 rounded-lg max-w-[50%]  rounded-tr-none relative'
@@ -15,11 +15,6 @@ export const RightHeader = () => {
   return (
     <div className="flex justify-between items-center bg-gray-200 dark:bg-[#202c33] px-7 py-3 border-l border-transparent">
       <div className="flex items-center gap-4 cursor-pointer">
-        <div className="w-11 h-11 rounded-full overflow-hidden">
-          <Image src="https://imgtr.ee/images/2024/06/06/ec689bac4544ec8bb86b50c23484b1c2.png" alt="logo" 
-            className="w-full h-full object-cover"
-          />
-        </div>
         <p className="text-xl">{ "userName" }</p>
       </div>
       <div className="cursor-pointer">

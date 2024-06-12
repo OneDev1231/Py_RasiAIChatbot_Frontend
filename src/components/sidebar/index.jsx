@@ -10,7 +10,7 @@ export const Search = () => {
             <IoSearchOutline className="text-black dark:text-white" />
         </div>
         <div>
-            <input type='text' placeholder="Search or start new chat" 
+            <input type='text' placeholder="Search" 
                 className="bg-transparent outline-none"
             />
         </div>
