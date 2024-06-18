@@ -5,7 +5,6 @@ import React, {useState} from 'react'
 import { signin } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
 
 export default function LoginPage () {
     const [email, setEmail] = useState('');
@@ -28,7 +27,7 @@ export default function LoginPage () {
             router.push('/dashboard')
         }
         else {
-            toast.error(response.data)
+            toast.error(response.data)      
         }
     };
 

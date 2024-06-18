@@ -4,18 +4,41 @@ import React, { useState } from 'react';
 import { IoMdSend } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { SlOptionsVertical } from "react-icons/sl";
-import { useBotDispatch, useBotSelector } from '@/lib/hooks/rtk_hooks';
+import { useMessageDispatch, useMessageSelector } from '@/lib/hooks/rtk_hooks';
+import { addMessage } from '@/lib/features/messageSlice';
+import toast from 'react-hot-toast';
+import { sendMessage } from '@/services/messages/send-message';
 
 
 const style1 = 'self-start bg-[#202c33] px-3 py-2 rounded-lg max-w-[50%] rounded-tl-none relative'
 const style2 = 'self-end bg-[#005c4b] px-3 py-2 rounded-lg max-w-[50%]  rounded-tr-none relative'
 
+const formatMessage = (message) => {
+  if (!message) return '';
 
-export const RightHeader = () => {
+  // Replace newline characters with <br> tags
+  let formattedMessage = message.replace(/\n/g, '<br>');
+
+  // Replace **bold** markers with <b> tags
+  formattedMessage = formattedMessage.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+
+  return formattedMessage;
+};
+
+const MessageComponent = ({ message }) => {
+  return (
+      <div className="text-white" 
+      // Use dangerouslySetInnerHTML to render the formatted message
+       dangerouslySetInnerHTML={{ __html: formatMessage(message) }} 
+       />
+  );
+};
+
+export const RightHeader = ({chatbotName}) => {
   return (
     <div className="flex justify-between items-center bg-gray-200 dark:bg-[#202c33] px-7 py-3 border-l border-transparent">
       <div className="flex items-center gap-4 cursor-pointer">
-        <p className="text-xl">{ "userName" }</p>
+        <p className="text-xl">{ chatbotName }</p>
       </div>
       <div className="cursor-pointer">
         <SlOptionsVertical />
@@ -25,17 +48,18 @@ export const RightHeader = () => {
 }
 
 export const ChatBox = () => {
-  const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
-
+  // const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
+  const group_messages = useMessageSelector(state => state.message.messages);
   return (
     <div className="flex flex-col-reverse gap-4 px-20 overflow-y-auto py-6">
-      { !selectedChatbot?.messages?.length && 
+      { !group_messages?.length && 
         <p className="text-center">Start messaging!</p> 
       }
-      { selectedChatbot?.messages?.map((item) => {
+      { group_messages?.slice().reverse().map((item) => {
         return (
-          <div key={item?.id} className={item?.me ? style2: style1}>
-            <p className={`text-white`}>{ item?.message }</p>
+          <div key={item?.id} className={!item?.botcheck ? style2: style1}>
+            {/* <p className={`text-white`}>{ item?.message }</p> */}
+            <MessageComponent message={item?.message}/>
             <p className="text-[11px] text-zinc-300 text-right">{ new Date(item?.createdAt).toString().slice(0, 16) }</p>
           </div>
         )
@@ -67,17 +91,17 @@ export const MessageComposer = ({handleChangeText, text, handleSendMessage}) => 
 
 let id = 5;
 
-export const ChatBoxView = () => {
-  const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
+export const ChatBoxView = ({chatbotName}) => {
+  // const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
   const [text, setText] = useState('');
 
-  const dispatch = useBotDispatch();
+  const dispatch = useMessageDispatch();
 
   const handleChangeText = (e) => {
       setText(e.target.value);
   }
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
       e.preventDefault();
       if (!text) {
           toast.dismiss();
@@ -85,19 +109,37 @@ export const ChatBoxView = () => {
           return;
       }
       const msg = {
-          id,
-          me: true,
+          botcheck: false,
           message: text,
-          createdAt: new Date()
+          createdAt: new Date().toISOString()
       }
-      id++;
+      setText("");
+      dispatch(addMessage({info: msg}))
+      try {
+        const data = await sendMessage(msg, chatbotName);
+        console.log(data)
+        if (data !== null) {
+          const reply = {
+            botcheck: true,
+            message: data.message,
+            createdAt: data.createdAt
+          }
+          dispatch(addMessage({info: reply}))
+        }
+        else {
+          return;
+        }
+      } catch (error) {
+        console.log(error)
+        return;
+      }    
       // dispatch(addChat({id: selectedChatbot?.id, info: msg}))
       setText('');
   }
 
     return (
       <div className="relative h-full flex flex-col justify-between" id="rightbar">
-        <RightHeader />
+        <RightHeader chatbotName={chatbotName}/>
         <div className="flex flex-col justify-end w-full h-full bg-gray-300 dark:bg-black">
           <ChatBox />
           <MessageComposer handleChangeText={handleChangeText} handleSendMessage={handleSendMessage} 

@@ -15,6 +15,7 @@ export const dashboardSlice = createSlice({
         name: item.chatbotName,
         phone: item.phone,
         files: item.upsert_filelist,
+        text: item.plaintext,
         customers: item.customerID,
         prompt: item.prompt,
       }))
@@ -37,17 +38,31 @@ export const dashboardSlice = createSlice({
         state.selectedChatbot = action.payload;
     },
     updateChatbot: (state, action) => {
-        const {id, newFile} = action.payload;
+        const {id, newFile, text} = action.payload;
         state.chatbots.forEach((chatbot) => {
             if (chatbot.id == id) {
+              if (newFile != null) {
                 chatbot.files.push(newFile);
-                state.selectedChatbot = chatbot
+              }
+              if (text != null) {
+                chatbot.text = text;
+              }
+                state.selectedChatbot = chatbot;
             }
         });
+    },
+    deleteUpsertedFile: (state, action) => {
+      const {id, deletedFile} = action.payload;
+      state.chatbots.forEach((chatbot) => {
+        if (chatbot.id == id) {
+            chatbot.files.filter(item => item !== deletedFile);
+            state.selectedChatbot = chatbot
+        }
+      });
     }
   }
 })
 
-export const { addChatbot, selectChatBot, updateChatbot, setSlice } = dashboardSlice.actions
+export const { addChatbot, selectChatBot, updateChatbot, setSlice, deleteUpsertedFile } = dashboardSlice.actions
 
 export default dashboardSlice.reducer
