@@ -140,7 +140,7 @@ export const ChatBoxView = ({chatbotName}) => {
     return (
       <div className="relative h-full flex flex-col justify-between" id="rightbar">
         <RightHeader chatbotName={chatbotName}/>
-        <div className="flex flex-col justify-end w-full h-full bg-gray-300 dark:bg-black">
+        <div className="flex flex-1 flex-col justify-end w-full h-full bg-gray-300 dark:bg-black overflow-hidden">
           <ChatBox />
           <MessageComposer handleChangeText={handleChangeText} handleSendMessage={handleSendMessage} 
               text={text}

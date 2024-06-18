@@ -132,7 +132,7 @@ const Dashboard = () => {
                     <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Prompts</label>
                   </div>
                   <div className='w-full px-6 pb-3'>
-                    <textarea id='multiline-input' type='text' className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder={prompt} value={prompt} /> {/*onChange={handlePromptChange} />} */}
+                    <textarea id='multiline-input' type='text' className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder={prompt} value={prompt} /> {/*onChange={handlePromptChange} />} */}
                   </div>
                   {/* <div className='flex justify-end pb-3 px-6'>
                     <Button>Change</Button>
@@ -144,7 +144,7 @@ const Dashboard = () => {
                     <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embeded Plain Text</label>
                   </div>
                   <div className='w-full px-6'>
-                    <textarea id='multiline-input' type='text' className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Please write the plain text to embed" value={text} onChange={handleTextChange}/>
+                    <textarea id='multiline-input' type='text' className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Please write the plain text to embed" value={text} onChange={handleTextChange}/>
                   </div>
                   <div className='flex justify-end pb-3 px-6'>
                     <Button onClick={handleTextUpsert}>Upsert</Button>
