@@ -141,7 +141,7 @@ const Dashboard = () => {
 
                 <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
                   <div className='flex justify-center'>
-                    <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embeded Plain Text</label>
+                    <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embedded Plain Text</label>
                   </div>
                   <div className='w-full px-6'>
                     <textarea id='multiline-input' type='text' className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Please write the plain text to embed" value={text} onChange={handleTextChange}/>
