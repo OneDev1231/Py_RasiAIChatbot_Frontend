@@ -42,7 +42,10 @@ export const dashboardSlice = createSlice({
         state.chatbots.forEach((chatbot) => {
             if (chatbot.id == id) {
               if (newFile != null) {
-                chatbot.files.push(newFile);
+                if (chatbot.files == null) {
+                  chatbot.files = [newFile]
+                }
+                else chatbot.files.push(newFile);
               }
               if (text != null) {
                 chatbot.text = text;

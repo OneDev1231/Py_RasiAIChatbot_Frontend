@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { LeftBar } from '@/components/dash'
 import { Menu } from '@/components/menu'
 import { Navbar } from '@/components/navbar'
@@ -21,6 +21,8 @@ const Dashboard = () => {
   const [status, setStatus] = useState("");
   const [text, setText] = useState("");
   const [prompt, setPrompt] = useState("");
+  const fileInputRef = useRef(null);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await getChatbots();
@@ -37,7 +39,6 @@ const Dashboard = () => {
   }, [selectedChatbot]);
 
   const handleFileChange = async (event) => {
-    event.preventDefault();
     const file = event.target.files[0];
 
     if(!file) return;
@@ -49,7 +50,8 @@ const Dashboard = () => {
       const response = await existing_chatbot_upsert_file(selectedChatbot.name, file);
       console.log(response)
       if (response == 200) {
-        dispatch(updateChatbot({id: selectedChatbot?.id, newFile: file.name}));
+        console.log(file.name)
+        dispatch(updateChatbot({id: selectedChatbot?.id, newFile: file.name, text: null}));
         setStatus("File uploaded successfully!");
       }
       else {
@@ -58,7 +60,10 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error)
       setStatus("Error uploading file!");
-    }    
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
   };
 
   const handleTextChange = (e) => {
@@ -155,15 +160,22 @@ const Dashboard = () => {
                   <div className='border my-7 mx-10 flex flex-col gap-5 items-center'>
                     <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold'>Uploaded File List</label>
                     <div className='w-full px-6 flex flex-col gap-2 rounded-lg'>
-                      {Array.from(selectedChatbot.files).map(
-                        (item, i) => {
-                            return (
-                              <div key={i} className='flex flex-row justify-between items-center border rounded-lg px-2'>
-                                <p className='text-gray-700 dark:text-gray-200'>{item}</p>
-                                <FaTrash onClick={() => handleDeleteUploadedFile(item)} className='cursor-pointer' />
-                              </div>
+                      {
+                        selectedChatbot.files == null ? (
+                          <div>
+                            There is no file upserted.
+                          </div>
+                        ) : (
+                          Array.from(selectedChatbot.files).map(
+                            (item, i) => {
+                                return (
+                                  <div key={i} className='flex flex-row justify-between items-center border rounded-lg px-2'>
+                                    <p className='text-gray-700 dark:text-gray-200'>{item}</p>
+                                    <FaTrash onClick={() => handleDeleteUploadedFile(item)} className='cursor-pointer' />
+                                  </div>
+                                )
+                              }
                             )
-                          }
                         )
                       }
                       <div className='flex justify-end'>
@@ -178,6 +190,7 @@ const Dashboard = () => {
                           <input
                               id="file-upload"
                               type="file"
+                              ref={fileInputRef}
                               onChange={handleFileChange}
                               style={{ display: 'none' }}
                           />
