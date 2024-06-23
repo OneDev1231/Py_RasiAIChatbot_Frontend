@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoMdSend } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -19,9 +19,29 @@ const formatMessage = (message) => {
   // Replace newline characters with <br> tags
   let formattedMessage = message.replace(/\n/g, '<br>');
 
-  // Replace **bold** markers with <b> tags
-  formattedMessage = formattedMessage.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+   // Replace **bold** markers with <b> tags
+   formattedMessage = formattedMessage.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 
+   // Replace *italic* markers with <i> tags
+   formattedMessage = formattedMessage.replace(/\*(.+?)\*/g, '<i>$1</i>');
+ 
+   // Replace #### headers with <h4> tags
+   formattedMessage = formattedMessage.replace(/#### (.+?)<br>/g, '<h4>$1</h4>');
+ 
+   // Replace ### headers with <h3> tags
+   formattedMessage = formattedMessage.replace(/### (.+?)<br>/g, '<h3>$1</h3>');
+ 
+   // Replace ## headers with <h2> tags
+   formattedMessage = formattedMessage.replace(/## (.+?)<br>/g, '<h2>$1</h2>');
+ 
+   // Replace # headers with <h1> tags
+   formattedMessage = formattedMessage.replace(/# (.+?)<br>/g, '<h1>$1</h1>');
+ 
+   // Replace `inline code` markers with <code> tags
+   formattedMessage = formattedMessage.replace(/`(.+?)`/g, '<code>$1</code>');
+ 
+   // Replace triple backticks ```code block``` markers with <pre><code> tags
+   formattedMessage = formattedMessage.replace(/```(.+?)```/gs, '<pre><code>$1</code></pre>');
   return formattedMessage;
 };
 
@@ -69,14 +89,47 @@ export const ChatBox = () => {
 }
 
 export const MessageComposer = ({handleChangeText, text, handleSendMessage}) => {
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      // Maximum height is 30% of the viewport height
+      const maxHeight = window.innerHeight * 0.3;
+      // Reset height - important to shrink on delete
+      textareaRef.current.style.height = 'auto';
+      // Calculate the new height based on scroll height
+      const newHeight = Math.min(textareaRef.current.scrollHeight, maxHeight);
+      // Set the new height
+      textareaRef.current.style.height = `${newHeight}px`;
+      
+      // Add overflow if content exceeds maxHeight
+      if (textareaRef.current.scrollHeight > maxHeight) {
+        textareaRef.current.style.overflow = 'auto';
+      } else {
+        textareaRef.current.style.overflow = 'hidden';
+      }
+    }
+  }, [text]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(e);
+    }
+  };
   return (
     <div className="bg-gray-200 dark:bg-[#202c33] w-full">
       <form onSubmit={handleSendMessage}>
         <div className="px-6 py-3 flex flex-row justify-between items-center gap-4">
           <GrAttachment className='text-gray-500 dark:text-gray-300 text-2xl cursor-pointer' />
-          <input type="text" placeholder="Type a message" 
-            className="px-5 py-3 rounded-lg w-full outline-none"
-            onChange={handleChangeText} value={text}
+          <textarea 
+            placeholder="Type a message"
+            className="px-5 py-3 rounded-lg w-full outline-none resize-none overflow-hidden"
+            onChange={handleChangeText}
+            value={text}
+            onKeyDown={handleKeyDown}
+            rows={1}
+            ref={textareaRef}
           />
           <div className=" text-3xl cursor-pointer"
             type='submit' onClick={handleSendMessage}
@@ -88,8 +141,6 @@ export const MessageComposer = ({handleChangeText, text, handleSendMessage}) => 
     </div>
   )
 }
-
-let id = 5;
 
 export const ChatBoxView = ({chatbotName}) => {
   // const selectedChatbot = useBotSelector(state => state.dashboard.selectedChatbot);
