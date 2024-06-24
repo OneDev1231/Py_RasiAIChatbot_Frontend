@@ -48,7 +48,7 @@ const features = [
 
 export default function Product() {
   return (
-    <div id="product" className="py-16 sm:py-28">
+    <div className="mt-32 sm:mt-56">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-600">
