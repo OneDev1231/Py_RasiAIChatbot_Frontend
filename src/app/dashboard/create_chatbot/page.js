@@ -2,20 +2,23 @@
 
 import { Button, Input } from "@/components/elements";
 import { Menu } from "@/components/menu";
-import { addChatbot } from "@/lib/features/dashboardSlice";
-import { useBotDispatch } from "@/lib/hooks/rtk_hooks";
+import { addChatbot, setSlice } from "@/lib/features/dashboardSlice";
+import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
 import withAuth from "@/services/auth/hoc";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSpinner } from "react-icons/fa";
 import { GoDot } from "react-icons/go";
 import { GoDotFill } from "react-icons/go";
 import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
+import { getChatbots } from "@/services/chatbot/get-chatbots";
+import { motion } from 'framer-motion';
 
 const CreateChatbotPage = () => {
     const [page, setPage] = useState(1);
-    const [status, setStatus] = useState("");
+    const [loading, setLoading] = useState(false);
+    const chatbots = useBotSelector(state => state.dashboard.chatbots);
     const [data, setData] = useState({
         name: '',
         prompt: '',
@@ -24,6 +27,14 @@ const CreateChatbotPage = () => {
     const inputRef = useRef(null);
     const dispatch = useBotDispatch();
     const router = useRouter();
+    useEffect(() => {
+        const fetchData = async () => {
+          const response = await getChatbots();
+          dispatch(setSlice(response));
+        }
+        fetchData();
+      }, [dispatch]);
+    
 
     const handlePromptChange = (e) => {
         setData({
@@ -41,9 +52,14 @@ const CreateChatbotPage = () => {
         if(!data.name && page == 1) {
             toast.dismiss();
             toast.error('Please enter the bot name!');
+            console.log(chatbots)
             return;
         }
-
+        if(chatbots.some(chatbot => chatbot.name === data.name) && page == 1) {
+            toast.dismiss();
+            toast.error("The chatbot with the same name already exists.")
+            return;
+        }
         if(!data.prompt && page == 2) {
             toast.dismiss();
             toast.error('Please enter a purpose!');
@@ -76,9 +92,10 @@ const CreateChatbotPage = () => {
         event.preventDefault();
         if (data.files.length == 0) {
             toast.dismiss();
-            toast.error('Please upsert the files \n .docx, .pdf, .json, .csv are available');
+            toast.error('Please upload the files \n .docx, .pdf, .json, .csv, .pptx, .xlsx are available');
             return;
         }
+        setLoading(true);
         try {
             const status_code = await add_new_chatbot(data);
             console.log(status_code)
@@ -91,9 +108,10 @@ const CreateChatbotPage = () => {
             }
           } catch (error) {
             console.log(error)
-            setStatus("Error sending request");
+          } finally {
+            setLoading(false);
+            router.push('/dashboard');
           }
-        router.push('/dashboard');
     }
     
 
@@ -159,7 +177,20 @@ const CreateChatbotPage = () => {
                             <div className="flex justify-end">
                                 { page === 1 && <Button onClick={handleNext}>Next</Button> }
                                 { page === 2 && <Button onClick={handleNext}>Next</Button> }
-                                { page === 3 && <Button onClick={handleAddChatbot}>Complete</Button> }
+                                { page === 3 && <Button onClick={handleAddChatbot} disabled={loading} className="flex items-center">
+                                    {
+                                        loading ? (
+                                            <motion.div
+                                                initial={{ rotate: 0 }}
+                                                animate={{ rotate: 360 }}
+                                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                                                style={{ display: 'inline-block' }}
+                                            >
+                                                <FaSpinner />
+                                            </motion.div>
+                                        ) : ("Complete")
+                                    }
+                                </Button> }
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ export const sendMessage = async (msg, chatbotName) => {
     formData.append("message", msg.message);
     formData.append("chatbotName", chatbotName);
     formData.append("createdAt", msg.createdAt);
+    formData.append("customerId", chatbotName);
 
     try {
         const response = await axios.post(

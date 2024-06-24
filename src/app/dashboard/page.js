@@ -144,7 +144,7 @@ const Dashboard = () => {
                   </div> */}
                 </div>
 
-                <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
+                {/* <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
                   <div className='flex justify-center'>
                     <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embedded Plain Text</label>
                   </div>
@@ -154,16 +154,16 @@ const Dashboard = () => {
                   <div className='flex justify-end pb-3 px-6'>
                     <Button onClick={handleTextUpsert}>Upsert</Button>
                   </div>
-                </div>
+                </div> */}
 
                 <div>
                   <div className='border my-7 mx-10 flex flex-col gap-5 items-center'>
-                    <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold'>Uploaded File List</label>
+                    <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold'>Uploaded Knowledge Base</label>
                     <div className='w-full px-6 flex flex-col gap-2 rounded-lg'>
                       {
                         selectedChatbot.files == null ? (
                           <div>
-                            There is no file upserted.
+                            There is no file uploaded.
                           </div>
                         ) : (
                           Array.from(selectedChatbot.files).map(
@@ -185,7 +185,7 @@ const Dashboard = () => {
                               className='bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer'
                               htmlFor="file-upload"
                           >
-                              Upsert File
+                              Upload
                           </label>
                           <input
                               id="file-upload"
@@ -205,9 +205,9 @@ const Dashboard = () => {
                   <Button onClick={handleTestChattingClick}>
                       Test chatting
                   </Button>
-                  <Button onClick={() => router.push('/chatting')}>
+                  {/* <Button onClick={() => router.push('/chatting')}>
                       {selectedChatbot?.messages?.length ? 'Continue chatting': 'Start chatting' }
-                  </Button>
+                  </Button> */}
                 </div>
               </>
             ) : (
