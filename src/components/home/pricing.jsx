@@ -8,7 +8,7 @@ export default function Pricing() {
   const price = sliderValue * 10;
 
   return (
-    <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="relative isolate bg-white px-6 mt-32 sm:mt-56 lg:px-8">
       <div
         className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl"
         aria-hidden="true"
