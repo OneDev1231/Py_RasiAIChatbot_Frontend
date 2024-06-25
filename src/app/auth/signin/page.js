@@ -47,10 +47,10 @@ export default function LoginPage () {
                     Login
                 </Button>
 
-                <p className='mt-2 text-sm text-gray-500 text-center'>
+                {/* <p className='mt-2 text-sm text-gray-500 text-center'>
                 Doesn&apos;t have an account? 
                 <Link href='/auth/signup' className='font-semibold text-blue-700'> Signup</Link>
-                </p>
+                </p> */}
             </div>
             </form>
         </div>
