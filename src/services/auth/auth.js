@@ -4,7 +4,6 @@ import axios from 'axios'
 export const signin = async (email, password) => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, { email, password }, { withCredentials: true });
-        console.log(response.data)
         if (typeof response.data.status == 'undefined')
             return {success: true, data: "Login is successful!"}
         else {

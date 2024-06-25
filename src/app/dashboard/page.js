@@ -60,11 +60,13 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error)
       setStatus("Error uploading file!");
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+  } finally {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
-  };
+  }
+  }
+
 
   const handleTextChange = (e) => {
     setText(e.target.value);
