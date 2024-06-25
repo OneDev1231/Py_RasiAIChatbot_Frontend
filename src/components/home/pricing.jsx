@@ -1,11 +1,35 @@
 "use client";
 
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { useState } from "react";
 
 export default function Pricing() {
   const [sliderValue, setSliderValue] = useState(10);
-  const price = sliderValue * 10;
+
+  function formatPrice(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function calculateCost() {
+    let totalCost = 0;
+
+    if (sliderValue <= 10) {
+      totalCost = 500;
+    } else if (sliderValue <= 30) {
+      totalCost = 500 + Math.ceil(sliderValue / 4) * 400;
+    } else if (sliderValue <= 60) {
+      totalCost = 2100 + Math.ceil(sliderValue / 2) * 300;
+    } else if (sliderValue <= 100) {
+      totalCost = 6600 + Math.ceil(sliderValue / 0.75) * 200;
+    } else {
+      totalCost = 500;
+    }
+
+    return totalCost;
+  }
+
+  const price = formatPrice(calculateCost());
 
   return (
     <div className="relative isolate bg-white px-6 mt-32 sm:mt-56 lg:px-8">
@@ -29,13 +53,63 @@ export default function Pricing() {
           The right price for you, whoever you are
         </p>
       </div>
-      <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-        Qui iusto aut est earum eos quae. Eligendi est at nam aliquid ad quo
-        reprehenderit in aliquid fugiat dolorum voluptatibus.
-      </p>
       <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
-        {/** standard */}
+        {/** custom */}
         <div className="relative bg-white shadow-2xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
+          <h3
+            id="tier-enterprise"
+            className="text-base font-semibold leading-7 text-indigo-600"
+          >
+            Enterprise
+          </h3>
+          <p className="mt-4 flex items-baseline gap-x-2">
+            <span className="text-5xl font-bold tracking-tight text-gray-900">
+              Custom
+            </span>
+          </p>
+          <ul
+            role="list"
+            className="mt-6 space-y-3 text-sm leading-6 text-gray-600"
+          >
+            <li className="flex gap-x-3">
+              <CheckCircleIcon
+                className="h-6 w-5 flex-none text-indigo-600"
+                aria-hidden="true"
+              />
+              <span>
+                <span className="font-semibold">
+                  Direct Backend Integration.
+                </span>{" "}
+                Enable AI to perform actions like scheduling and refunds by
+                connecting directly to your backend systems.
+              </span>
+            </li>
+            <li className="flex gap-x-3">
+              <CheckCircleIcon
+                className="h-6 w-5 flex-none text-indigo-600"
+                aria-hidden="true"
+              />
+              <span>
+                <span className="font-semibold">
+                  Dedicated AI Training and Optimization.
+                </span>{" "}
+                Receive expert support to optimize your AI agent, ensuring
+                perfect alignment with your complex business processes.
+              </span>
+            </li>
+          </ul>
+
+          <a
+            href="#"
+            aria-describedby="tier-enterprise"
+            className="bg-indigo-600 text-white shadow hover:bg-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
+          >
+            Contact our sales
+          </a>
+        </div>
+
+        {/** standard */}
+        <div className="bg-white/60 sm:mx-8 lg:mx-0 sm:rounded-t-none lg:rounded-bl-none lg:rounded-tr-3xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
           <h3
             id="tier-standard"
             className="text-base font-semibold leading-7 text-indigo-600"
@@ -44,12 +118,12 @@ export default function Pricing() {
           </h3>
           <p className="mt-4 flex items-baseline gap-x-2">
             <span className="text-5xl font-bold tracking-tight text-gray-900">
-              ${price}
+              {price} <span className="tracking-wide text-3xl">SAR</span>
             </span>
             <span className="text-base text-gray-500">/month</span>
           </p>
           <p className="mt-6 text-base leading-7 text-gray-600">
-            The perfect plan if you're just getting started with our product.
+            Expected customers to monthly engage with (at max):
           </p>
           <div className="mt-8">
             <SliderPrimitive.Root
@@ -62,45 +136,19 @@ export default function Pricing() {
               </SliderPrimitive.Track>
               <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-indigo-600 bg-white transition-colors ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2" />
             </SliderPrimitive.Root>
-            <div className="flex justify-around mt-4">
-              <p className="text-sm font-medium text-gray-500">500</p>
-              <p className="text-sm font-medium text-gray-500">200k</p>
-              <p className="text-sm font-medium text-gray-500">500k</p>
-              <p className="text-sm font-medium text-gray-500">1m</p>
+            <div className="flex relative mt-4 text-sm font-medium text-gray-500">
+              <p className="absolute left-[10%]">1k</p>
+              <p className="absolute left-[30%]">5k</p>
+              <p className="absolute left-[60%]">20k</p>
+              <p className="absolute right-0">100k</p>
             </div>
           </div>
           <a
             href="#"
             aria-describedby="tier-standard"
-            className="bg-indigo-600 text-white shadow hover:bg-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
-          >
-            Get started today
-          </a>
-        </div>
-
-        {/** custom */}
-        <div className="bg-white/60 sm:mx-8 lg:mx-0 sm:rounded-t-none lg:rounded-bl-none lg:rounded-tr-3xl rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10">
-          <h3
-            id="tier-enterprise"
-            className="text-base font-semibold leading-7 text-indigo-600"
-          >
-            Enterprise
-          </h3>
-          <p className="mt-4 flex items-baseline gap-x-2">
-            <span className="text-5xl font-bold tracking-tight text-gray-900">
-              Custom
-            </span>
-          </p>
-          <p className="mt-6 text-base leading-7 text-gray-600">
-            A plan that scales with your rapidly growing business.
-          </p>
-
-          <a
-            href="#"
-            aria-describedby="tier-enterprise"
             className="text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
           >
-            Contact sales
+            Get started today
           </a>
         </div>
       </div>

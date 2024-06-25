@@ -3,10 +3,9 @@
 import Hero from "@/components/home/hero";
 import Features from "@/components/home/features";
 import Pricing from "@/components/home/pricing";
-import FAQS from "@/components/home/faqs";
 import Footer from "@/components/home/footer";
-import Product from "@/components/home/product";
 import CTA from "@/components/home/cta";
+import GetStarted from "@/components/home/get-started";
 
 export default function Home() {
   return (
@@ -15,9 +14,8 @@ export default function Home() {
       <main className="isolate">
         <Hero />
         <Features />
-        <Product />
+        <GetStarted />
         <Pricing />
-        <FAQS />
         <CTA />
       </main>
       <Footer />

@@ -1,3 +1,5 @@
+import { CheckIcon } from "@heroicons/react/24/outline";
+
 export default function CTA() {
   return (
     <div className="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
@@ -37,16 +39,26 @@ export default function CTA() {
         />
       </svg>
 
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Boost your productivity.
-          <br />
-          Start using our app today.
+      <div className="text-center">
+        <h2 className="text-3xl font-bold max-w-2xl mx-auto tracking-tight text-gray-900 sm:text-4xl">
+          Resolve 80% of customer support complex issues instantly across all
+          channels.
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-          Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim
-          id veniam aliqua proident excepteur commodo do ea.
-        </p>
+        <ul className="mt-10 text-gray-700 font-semibold flex items-center justify-center gap-6 text-lg">
+          <li className="flex gap-2">
+            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
+            <span>Cut costs by 70%</span>
+          </li>
+          <li className="flex gap-2">
+            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
+            <span>Boost satisfaction by 40%</span>
+          </li>
+          <li className="flex gap-2">
+            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
+            <span>95% faster response times</span>
+          </li>
+        </ul>
+
         <div className="mt-10 flex items-center justify-center">
           <a
             href="#"
