@@ -100,7 +100,8 @@ export default function Pricing() {
           </ul>
 
           <a
-            href="#"
+            href="https://opnform.com/forms/custom-features-form-kndagv"
+            target="_blank"
             aria-describedby="tier-enterprise"
             className="bg-indigo-600 text-white shadow hover:bg-indigo-500 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
           >
