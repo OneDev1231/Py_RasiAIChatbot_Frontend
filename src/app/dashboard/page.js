@@ -101,7 +101,7 @@ const Dashboard = () => {
         toast.success("File deleted successfully!");
       }
       else {
-        toast.error("Didn't delted properly.");
+        toast.error("Didn't deleted properly.");
       }
     } catch (error) {
       console.log(error)
