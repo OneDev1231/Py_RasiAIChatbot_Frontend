@@ -51,7 +51,7 @@ const features = [
 
 export default function Product() {
   return (
-    <div className="mt-8 sm:mt-16">
+    <div id="features" className="pt-8 sm:pt-16 pb-16 sm:pb-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-600">

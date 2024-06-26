@@ -2,7 +2,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 
 export default function CTA() {
   return (
-    <div className="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
+    <div className="relative isolate px-6 py-16 sm:py-32 lg:px-8">
       <div
         className="absolute inset-x-0 top-10 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
         aria-hidden="true"

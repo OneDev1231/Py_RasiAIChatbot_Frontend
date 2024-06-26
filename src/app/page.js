@@ -5,16 +5,17 @@ import Features from "@/components/home/features";
 import Pricing from "@/components/home/pricing";
 import Footer from "@/components/home/footer";
 import CTA from "@/components/home/cta";
-import GetStarted from "@/components/home/get-started";
+import HowItWorks from "@/components/home/how-it-works";
+import Header from "@/components/home/header";
 
 export default function Home() {
   return (
     <div className="bg-white">
-      {/*  <Header /> */}
+      <Header />
       <main className="isolate">
         <Hero />
         <Features />
-        <GetStarted />
+        <HowItWorks />
         <Pricing />
         <CTA />
       </main>
