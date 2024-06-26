@@ -1,37 +1,6 @@
-"use client";
-
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import * as SliderPrimitive from "@radix-ui/react-slider";
-import { useState } from "react";
 
 export default function Pricing() {
-  const [sliderValue, setSliderValue] = useState(10);
-
-  function formatPrice(amount) {
-    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  function calculateCost() {
-    let totalCost = 0;
-
-    if (sliderValue <= 10) {
-      totalCost = 500;
-    } else if (sliderValue <= 30) {
-      totalCost = 500 + Math.ceil(sliderValue / 4) * 400;
-    } else if (sliderValue <= 60) {
-      totalCost = 2100 + Math.ceil(sliderValue / 2) * 300;
-    } else if (sliderValue <= 100) {
-      totalCost = 6600 + Math.ceil(sliderValue / 0.75) * 200;
-    } else {
-      totalCost = 500;
-    }
-
-    return totalCost;
-  }
-
-  const price = formatPrice(calculateCost());
-
   return (
     <div
       id="pricing"
