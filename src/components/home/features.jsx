@@ -2,7 +2,6 @@ import {
   BoltIcon,
   ChartBarSquareIcon,
   ChatBubbleBottomCenterTextIcon,
-  ChatBubbleLeftEllipsisIcon,
   ChatBubbleLeftRightIcon,
   CodeBracketSquareIcon,
   EnvelopeIcon,
@@ -43,8 +42,8 @@ const features = [
       <div className="[&_svg]:inline [&_svg]:size-4">
         One smart inbox for all channels. Seamlessly manage interactions from
         WhatsApp <WhatsAppIcon />, email <EnvelopeIcon />
-        , SMS <ChatBubbleBottomCenterTextIcon />, and web chat{" "}
-        <ChatBubbleLeftEllipsisIcon /> in a unified, AI-enhanced dashboard.
+        , and SMS <ChatBubbleBottomCenterTextIcon /> in a unified, AI-enhanced
+        dashboard.
       </div>
     ),
     icon: InboxStackIcon,

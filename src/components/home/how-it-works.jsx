@@ -14,7 +14,7 @@ const steps = [
   {
     name: "2. Customize Your AI Agent",
     description:
-      "Fine-tune your AI's responses and behavior through our intuitive interface. Set up multilingual support, including English and Arabic, to match your global customer base. Integrate and Launch",
+      "Fine-tune your AI's responses and behavior through our intuitive interface. Set up multilingual support, including English and Arabic, to match your global customer base. Integrate and Launch.",
     icon: AdjustmentsHorizontalIcon,
   },
   {
