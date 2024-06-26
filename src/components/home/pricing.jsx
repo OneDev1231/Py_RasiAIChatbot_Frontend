@@ -68,40 +68,63 @@ export default function Pricing() {
             </h3>
             <div className="mt-4 flex items-baseline gap-x-2">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                {price}
+                750
               </span>
               <span className="text-base font-semibold leading-7 text-gray-600">
                 SAR/month
               </span>
             </div>
-            <p className="mt-6 text-base leading-7 text-gray-600">
-              Expected customers to monthly engage with (at max):
+            <ul
+              role="list"
+              className="mt-10 space-y-4 text-sm leading-6 text-gray-600"
+            >
+              <li className="flex gap-x-3">
+                <CheckIcon
+                  className="h-6 w-5 flex-none text-indigo-600"
+                  aria-hidden="true"
+                />
+                AI powered conversations*
+              </li>
+              <li className="flex gap-x-3">
+                <CheckIcon
+                  className="h-6 w-5 flex-none text-indigo-600"
+                  aria-hidden="true"
+                />
+                Omni channel platform integrating whatsApp, email and SMS
+              </li>
+              <li className="flex gap-x-3">
+                <CheckIcon
+                  className="h-6 w-5 flex-none text-indigo-600"
+                  aria-hidden="true"
+                />
+                Tailored AI responses based on your data, products and brand
+                voice
+              </li>
+              <li className="flex gap-x-3">
+                <CheckIcon
+                  className="h-6 w-5 flex-none text-indigo-600"
+                  aria-hidden="true"
+                />
+                Insightful analytics of customers sentiment and common issues
+              </li>
+              <li className="flex gap-x-3">
+                <CheckIcon
+                  className="h-6 w-5 flex-none text-indigo-600"
+                  aria-hidden="true"
+                />
+                +100 languages support including Arabic and English
+              </li>
+            </ul>
+            <p className="mt-6 text-xs leading-5 text-gray-600">
+              * Up to 150 customers engaged per month.
             </p>
-            <div className="mt-10">
-              <SliderPrimitive.Root
-                value={[sliderValue]}
-                onValueChange={setSliderValue}
-                className="relative flex w-full touch-none select-none items-center"
-              >
-                <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-gray-200">
-                  <SliderPrimitive.Range className="absolute h-full bg-indigo-600" />
-                </SliderPrimitive.Track>
-                <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-indigo-600 bg-white transition-colors ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2" />
-              </SliderPrimitive.Root>
-              <div className="flex relative mt-4 text-sm font-medium text-gray-500">
-                <p className="absolute left-[10%]">1k</p>
-                <p className="absolute left-[30%]">5k</p>
-                <p className="absolute left-[60%]">20k</p>
-                <p className="absolute right-0">100k</p>
-              </div>
-            </div>
           </div>
           <a
             href="https://opnform.com/forms/join-our-waitlist-wtb1a7"
             aria-describedby="standard-tier"
             className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Get started today
+            Join the waitlist
           </a>
         </div>
 

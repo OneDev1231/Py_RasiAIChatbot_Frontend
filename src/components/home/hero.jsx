@@ -4,6 +4,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import WhatsAppIcon from "@/components/icons/whatsapp-icon";
 
 export default function Hero() {
   return (
@@ -65,10 +66,10 @@ export default function Hero() {
           </ul>
           <p className="mt-6 text-lg leading-8 text-gray-600 align-middle">
             Seamless integration with WhatsApp{" "}
-            <WhatsAppIcon className="size-5 shrink-0 inline-block fill-current" />
+            <WhatsAppIcon className="size-5 shrink-0 inline-block" />
             , email <EnvelopeIcon className="size-5 inline-block" />, and SMS{" "}
             <ChatBubbleBottomCenterTextIcon className="size-5 inline-block align-middle" />
-            . AI learns your business, speaks your brand voice.
+            .<br /> AI learns your business, speaks your brand voice.
           </p>
 
           <div className="mt-10 flex items-center">
@@ -96,27 +97,5 @@ export default function Hero() {
         </div>
       </div>
     </div>
-  );
-}
-
-function WhatsAppIcon(props) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlSpace="preserve"
-      style={{
-        enableBackground: "new 0 0 54 54",
-      }}
-      viewBox="0 0 54 54"
-      {...props}
-    >
-      <path
-        d="M-.2.1h53.8v53.4H-.2z"
-        style={{
-          fill: "none",
-        }}
-      />
-      <path d="M18.9 6.3c2.6-1.1 5.3-1.7 8.2-1.7 2.8 0 5.6.6 8.2 1.7 2.6 1.1 4.8 2.6 6.7 4.5 1.9 1.9 3.4 4.1 4.5 6.7 1.1 2.6 1.7 5.3 1.7 8.2 0 2.8-.6 5.6-1.7 8.2s-2.6 4.8-4.5 6.7c-1.9 1.9-4.1 3.4-6.7 4.5s-5.3 1.7-8.2 1.7c-3.6 0-7-.9-10.2-2.6L5.2 47.9 9 36.6c-2-3.3-3-6.9-3-10.9 0-2.8.6-5.6 1.7-8.2 1.1-2.6 2.6-4.8 4.5-6.7 1.8-1.9 4.1-3.3 6.7-4.5zM27 43.2c2.4 0 4.6-.5 6.8-1.4 2.2-.9 4-2.2 5.6-3.7s2.8-3.4 3.7-5.6 1.4-4.4 1.4-6.8-.5-4.6-1.4-6.8c-.9-2.2-2.2-4-3.7-5.6s-3.4-2.8-5.6-3.7c-2.2-.9-4.4-1.4-6.8-1.4-2.4 0-4.6.5-6.8 1.4-2.2.9-4 2.2-5.6 3.7s-2.8 3.4-3.7 5.6c-.9 2.2-1.4 4.4-1.4 6.8 0 3.8 1.1 7.2 3.3 10.3l-2.2 6.5 6.8-2.1c2.9 1.9 6.2 2.8 9.6 2.8zm4.2-13.4c.7-.9 1.2-1.4 1.5-1.4.2 0 1.1.4 2.7 1.2 1.6.8 2.4 1.3 2.5 1.5 0 .1.1.2.1.4 0 .6-.2 1.3-.5 2.1-.3.7-1 1.3-2 1.8s-2 .7-2.8.7c-1.1 0-2.8-.6-5.3-1.7-1.8-.8-3.4-1.9-4.7-3.3-1.3-1.4-2.7-3.1-4.1-5.2-1.3-2-2-3.8-2-5.4v-.2c.1-1.7.7-3.2 2.1-4.4.4-.4.9-.6 1.5-.6h1c.4 0 .6.1.7.2.1.1.3.4.4.8.1.4.5 1.2.9 2.5.5 1.3.7 2 .7 2.1 0 .4-.3.9-1 1.6-.6.7-1 1.1-1 1.3 0 .1 0 .3.1.4.6 1.4 1.6 2.6 2.8 3.8 1 1 2.4 1.9 4.2 2.8.2.1.4.2.6.2.4.1.9-.3 1.6-1.2z" />
-    </svg>
   );
 }

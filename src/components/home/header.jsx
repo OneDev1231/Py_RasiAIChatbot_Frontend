@@ -47,7 +47,7 @@ export default function Header() {
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
             >
               {item.name}
             </a>
@@ -56,7 +56,7 @@ export default function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/auth/signin"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </a>

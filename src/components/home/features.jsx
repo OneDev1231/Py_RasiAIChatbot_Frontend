@@ -1,20 +1,22 @@
 import {
-  ArrowDownOnSquareStackIcon,
-  BanknotesIcon,
   BoltIcon,
+  ChartBarSquareIcon,
+  ChatBubbleBottomCenterTextIcon,
+  ChatBubbleLeftEllipsisIcon,
   ChatBubbleLeftRightIcon,
   CodeBracketSquareIcon,
-  CreditCardIcon,
+  EnvelopeIcon,
   InboxStackIcon,
   LanguageIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import WhatsAppIcon from "@/components/icons/whatsapp-icon";
 
 const features = [
   {
     name: "AI-Powered Resolution.",
     description:
-      "Solve up to 80% of complex issues instantly. Our AI understands and resolves intricate customer queries across all channels, just like your best human agent would",
+      "Solve up to 80% of complex issues instantly. Our AI understands and resolves intricate customer queries across all channels, just like your best human agent would.",
     icon: ChatBubbleLeftRightIcon,
   },
   {
@@ -24,10 +26,10 @@ const features = [
     icon: LanguageIcon,
   },
   {
-    name: "Cost-Effective Automation.",
+    name: "Insightful Analytics.",
     description:
-      "Slash support costs by 70%. Automate routine inquiries and FAQs, freeing up your human agents for high-value tasks and strategic interactions.",
-    icon: BanknotesIcon,
+      "Gain deep insights into customer sentiment, common issues, and support trends to continually improve your service.",
+    icon: ChartBarSquareIcon,
   },
   {
     name: "Lightning-Fast Response Times.",
@@ -37,8 +39,14 @@ const features = [
   },
   {
     name: "Omnichannel Integration.",
-    description:
-      "One smart inbox for all channels. Seamlessly manage interactions from WhatsApp, email, SMS, and web chat in a unified, AI-enhanced dashboard.",
+    description: (
+      <div className="[&_svg]:inline [&_svg]:size-4">
+        One smart inbox for all channels. Seamlessly manage interactions from
+        WhatsApp <WhatsAppIcon />, email <EnvelopeIcon />
+        , SMS <ChatBubbleBottomCenterTextIcon />, and web chat{" "}
+        <ChatBubbleLeftEllipsisIcon /> in a unified, AI-enhanced dashboard.
+      </div>
+    ),
     icon: InboxStackIcon,
   },
   {
