@@ -45,14 +45,13 @@ export function middleware(request) {
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
 
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-        request.url
-      )
-    );
+    let newPath = `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`;
+
+    if (request.nextUrl.searchParams) {
+      newPath += `?${request.nextUrl.searchParams}`;
+    }
+
+    return NextResponse.redirect(new URL(newPath, request.url));
   }
 }
 
