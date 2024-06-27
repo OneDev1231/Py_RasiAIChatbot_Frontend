@@ -42,7 +42,7 @@ export default function Hero({ dictionary }) {
           <p className="mt-6 text-lg leading-8 text-gray-600">
             {dictionary?.p_1}
           </p>
-          <ul className="mt-6 text-gray-700 font-semibold">
+          <ul className="mt-6 text-gray-700 font-semibold space-y-2">
             <li className="flex gap-2">
               <CheckIcon
                 className="h-5 w-5 text-indigo-500"

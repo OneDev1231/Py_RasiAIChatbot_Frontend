@@ -111,5 +111,13 @@
         "str_2": "in Riyadh, Saudi Arabia."
       }
     }
+  },
+  "auth": {
+    "sign_in": {
+      "heading": "تسجيل الدخول إلى حسابك",
+      "email": "البريد الالكتروني",
+      "password": "كلمة المرور",
+      "sign_in": "تسجيل الدخول"
+    }
   }
 }
