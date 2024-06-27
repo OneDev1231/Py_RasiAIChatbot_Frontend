@@ -57,7 +57,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <div id="testimonials" className="bg-white py-16 sm:py-28">
+    <div id="testimonials" className="mt-32 sm:mt-56">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-base font-semibold leading-7 tracking-tight text-indigo-600">
