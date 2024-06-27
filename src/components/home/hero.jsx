@@ -76,7 +76,7 @@ export default function Hero({ dictionary }) {
           <p className="text-lg leading-8 text-gray-600">{dictionary?.p_3}</p>
           <div className="mt-10 flex items-center">
             <a
-              href="https://opnform.com/forms/join-our-waitlist-wtb1a7"
+              href="https://app.formbricks.com/s/clxxagx0c04538moleczafoc2"
               target="_blank"
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >

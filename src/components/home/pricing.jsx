@@ -88,7 +88,7 @@ export default function Pricing({ dictionary }) {
             </p>
           </div>
           <a
-            href="https://opnform.com/forms/join-our-waitlist-wtb1a7"
+            href="https://app.formbricks.com/s/clxxagx0c04538moleczafoc2"
             aria-describedby="standard-tier"
             className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
@@ -140,7 +140,7 @@ export default function Pricing({ dictionary }) {
             </ul>
           </div>
           <a
-            href="https://opnform.com/forms/custom-features-form-kndagv"
+            href="https://app.formbricks.com/s/clxxayg1d04zx8molhqyjq7qj"
             target="_blank"
             aria-describedby="enterprise-tier"
             className="text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
