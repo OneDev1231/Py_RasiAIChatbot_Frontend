@@ -89,7 +89,7 @@ const navigation = {
     },
   ],
 };
-export default function Footer() {
+export default function Footer({ dictionary }) {
   return (
     <footer aria-labelledby="footer-heading" className="relative ">
       <h2 id="footer-heading" className="sr-only">
@@ -97,12 +97,11 @@ export default function Footer() {
       </h2>
       <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 mt-32 border-t border-gray-900/10">
         <div className="md:flex md:items-center md:justify-between">
-          <p className="text-xs leading-5 text-gray-500">
-            &copy; 2024 Rasi. All rights reserved.
-          </p>
+          <p className="text-xs leading-5 text-gray-500">{dictionary?.p_1}</p>
           <p className="mt-8 text-xs leading-5 flex items-center gap-1 text-gray-500 md:mt-0">
-            Made with <HeartIcon className="h-4 text-indigo-500" /> in Riyadh,
-            Saudi Arabia.
+            {dictionary?.p_2?.str_1}{" "}
+            <HeartIcon className="h-4 text-indigo-500" />{" "}
+            {dictionary?.p_2?.str_2}
           </p>
         </div>
       </div>

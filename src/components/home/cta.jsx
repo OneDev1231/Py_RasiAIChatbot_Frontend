@@ -1,6 +1,6 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 
-export default function CTA() {
+export default function CTA({ dictionary }) {
   return (
     <div className="relative isolate px-6 py-16 sm:py-32 lg:px-8">
       <div
@@ -41,21 +41,29 @@ export default function CTA() {
 
       <div className="text-center">
         <h2 className="text-3xl font-bold max-w-2xl mx-auto tracking-tight text-gray-900 sm:text-4xl">
-          Resolve 80% of customer support complex issues instantly across all
-          channels.
+          {dictionary?.heading}
         </h2>
-        <ul className="mt-10 text-gray-700 font-semibold flex items-center justify-center gap-6 text-lg">
+        <ul className="mt-10 text-gray-700 font-semibold flex flex-col sm:flex-row items-center justify-center gap-6 text-lg">
           <li className="flex gap-2">
-            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
-            <span>Cut costs by 70%</span>
+            <CheckIcon
+              className="h-5 w-5 text-indigo-500 shrink-0"
+              aria-hidden="true"
+            />
+            <span>{dictionary?.feature_1}</span>
           </li>
           <li className="flex gap-2">
-            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
-            <span>Boost satisfaction by 40%</span>
+            <CheckIcon
+              className="h-5 w-5 text-indigo-500 shrink-0"
+              aria-hidden="true"
+            />
+            <span>{dictionary?.feature_2}</span>
           </li>
           <li className="flex gap-2">
-            <CheckIcon className="h-5 w-5 text-indigo-500" aria-hidden="true" />
-            <span>95% faster response times</span>
+            <CheckIcon
+              className="h-5 w-5 text-indigo-500 shrink-0"
+              aria-hidden="true"
+            />
+            <span>{dictionary?.feature_3}</span>
           </li>
         </ul>
 
@@ -65,7 +73,7 @@ export default function CTA() {
             target="_blank"
             className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Join our waitlist
+            {dictionary?.link}
           </a>
         </div>
       </div>

@@ -4,39 +4,36 @@ import {
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 
-const steps = [
-  {
-    name: "1. Upload Your Knowledge Base",
-    description:
-      "Feed your AI with your business expertise. Simply upload your documents (PDF, Excel, Word, JSON) containing product info, FAQs, and policies. Our AI rapidly absorbs and understands your unique brand voice and offerings.",
-    icon: CloudArrowUpIcon,
-  },
-  {
-    name: "2. Customize Your AI Agent",
-    description:
-      "Fine-tune your AI's responses and behavior through our intuitive interface. Set up multilingual support, including English and Arabic, to match your global customer base. Integrate and Launch.",
-    icon: AdjustmentsHorizontalIcon,
-  },
-  {
-    name: "3. Go live across all channels ",
-    description:
-      "Connect your communication channels (WhatsApp, email, SMS) with few clicks. Your AI support agent is now ready to slash costs and delight customers 24/7.",
-    icon: RocketLaunchIcon,
-  },
-];
+export default function HowItWorks({ dictionary }) {
+  const steps = [
+    {
+      name: dictionary?.step_1.title,
+      description: dictionary?.step_1.description,
+      icon: CloudArrowUpIcon,
+    },
+    {
+      name: dictionary?.step_2.title,
+      description: dictionary?.step_2.description,
+      icon: AdjustmentsHorizontalIcon,
+    },
+    {
+      name: dictionary?.step_3.title,
+      description: dictionary?.step_3.description,
+      icon: RocketLaunchIcon,
+    },
+  ];
 
-export default function HowItWorks() {
   return (
     <div
       id="how-it-works"
       className="mx-auto py-16 max-w-7xl px-6 sm:py-28 lg:px-8"
     >
       <div className="mx-auto max-w-2xl lg:text-center">
-        <h2 className="text-base font-semibold leading-7 text-indigo-600">
-          Getting started
+        <h2 className="text-lg font-semibold leading-7 text-indigo-600">
+          {dictionary?.heading}
         </h2>
-        <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          How it works
+        <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          {dictionary?.tagline}
         </p>
       </div>
       <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

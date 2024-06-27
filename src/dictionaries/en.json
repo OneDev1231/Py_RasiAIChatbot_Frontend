@@ -1,0 +1,115 @@
+{
+  "home": {
+    "header": {
+      "features": "Features",
+      "how_it_works": "How it works",
+      "pricing": "Pricing",
+      "login": "Login"
+    },
+    "hero": {
+      "heading": "AI-Powered Customer Support",
+      "p_1": "Resolve 80% of customer support complex issues instantly across all channels.",
+      "feature_1": "Cut costs by 70%",
+      "feature_2": "Boost satisfaction by 40%",
+      "feature_3": "95% faster response times",
+      "p_2": {
+        "str_1": "Seamless integration with WhatsApp",
+        "str_2": ", email",
+        "str_3": ", and SMS"
+      },
+      "p_3": "AI learns your business, speaks your brand voice.",
+      "link": "Join our waitlist"
+    },
+    "features": {
+      "heading": "Features",
+      "tagline": "Everything you need",
+      "feature_1": {
+        "title": "AI-Powered Resolution.",
+        "description": "Solve up to 80% of complex issues instantly. Our AI understands and resolves intricate customer queries across all channels, just like your best human agent would."
+      },
+      "feature_2": {
+        "title": "Multilingual Support.",
+        "description": "Communicate in 100+ languages, including English and Arabic. Break language barriers and expand your global reach. Our AI adapts to your customers' preferred language seamlessly."
+      },
+      "feature_3": {
+        "title": "Insightful Analytics.",
+        "description": "Gain deep insights into customer sentiment, common issues, and support trends to continually improve your service."
+      },
+      "feature_4": {
+        "title": "Lightning-Fast Response Times.",
+        "description": "95% reduction in wait times. Provide instant, 24/7 support to your customers, eliminating queues and enhancing satisfaction."
+      },
+      "feature_5": {
+        "title": "Omnichannel Integration.",
+        "description": {
+          "str_1": "One smart inbox for all channels. Seamlessly manage interactions from WhatsApp",
+          "str_2": ", email",
+          "str_3": ", and SMS",
+          "str_4": ", in a unified, AI-enhanced dashboard."
+        }
+      },
+      "feature_6": {
+        "title": "Customizable AI Training.",
+        "description": "Tailor your AI agent to your brand. Easily train the AI with your business data, products, and brand voice - no technical expertise required."
+      }
+    },
+    "how_it_works": {
+      "heading": "How it works",
+      "tagline": "Getting started",
+      "step_1": {
+        "title": "1. Upload Your Knowledge Base",
+        "description": "Feed your AI with your business expertise. Simply upload your documents (PDF, Excel, Word, JSON) containing product info, FAQs, and policies. Our AI rapidly absorbs and understands your unique brand voice and offerings."
+      },
+      "step_2": {
+        "title": "2. Customize Your AI Agent",
+        "description": "Fine-tune your AI's responses and behavior through our intuitive interface. Set up multilingual support, including English and Arabic, to match your global customer base. Integrate and Launch."
+      },
+      "step_3": {
+        "title": "3. Go live across all channels",
+        "description": "Connect your communication channels (WhatsApp, email, SMS) with few clicks. Your AI support agent is now ready to slash costs and delight customers 24/7."
+      }
+    },
+    "pricing": {
+      "heading": "Pricing",
+      "tagline": "The right price for you, whoever you are",
+      "tier_1": {
+        "name": "Standard",
+        "price": { "str_1": "750", "str_2": "SAR/month" },
+        "feature_1": "AI powered conversations*",
+        "feature_2": "Omni channel platform integrating whatsApp, email and SMS",
+        "feature_3": "Tailored AI responses based on your data, products and brand voice",
+        "feature_4": "Insightful analytics of customers sentiment and common issues",
+        "feature_5": "+100 languages support including Arabic and English",
+        "footnote": "* Up to 150 customers engaged per month.",
+        "link": "Join our waitlist"
+      },
+      "tier_2": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "feature_1": {
+          "str_1": "Direct Backend Integration.",
+          "str_2": "Enable AI to perform actions like scheduling and refunds by connecting directly to your backend systems."
+        },
+        "feature_2": {
+          "str_1": "Dedicated AI Training and Optimization.",
+          "str_2": "Receive expert support to optimize your AI agent, ensuring perfect alignment with your complex business processes."
+        },
+        "link": "Contact our sales"
+      }
+    },
+    "cta": {
+      "heading": "Resolve 80% of customer support complex issues instantly across all channels.",
+      "feature_1": "Cut costs by 70%",
+      "feature_2": "Boost satisfaction by 40%",
+      "feature_3": "95% faster response times",
+      "link": "Join our waitlist"
+    },
+    "footer": {
+      "p_1": "© 2024 Rasi. All rights reserved.",
+      "p_2": {
+        "str_1": "Made with",
+        "str_2": "in Riyadh, Saudi Arabia."
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 
-export default function Pricing() {
+export default function Pricing({ dictionary }) {
   return (
     <div
       id="pricing"
@@ -19,11 +19,11 @@ export default function Pricing() {
         />
       </div>
       <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-        <h2 className="text-base font-semibold leading-7 text-indigo-600">
-          Pricing
+        <h2 className="text-lg font-semibold leading-7 text-indigo-600">
+          {dictionary?.heading}
         </h2>
         <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          The right price for you, whoever you are
+          {dictionary?.tagline}
         </p>
       </div>
       <div className="mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-4xl lg:grid-cols-2 mt-16 sm:mt-20">
@@ -33,14 +33,14 @@ export default function Pricing() {
               id="standard-tier"
               className="text-base font-semibold leading-7 text-indigo-600"
             >
-              Standard
+              {dictionary?.tier_1?.name}
             </h3>
             <div className="mt-4 flex items-baseline gap-x-2">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                750
+                {dictionary?.tier_1?.price?.str_1}
               </span>
               <span className="text-base font-semibold leading-7 text-gray-600">
-                SAR/month
+                {dictionary?.tier_1?.price?.str_2}
               </span>
             </div>
             <ul
@@ -52,40 +52,39 @@ export default function Pricing() {
                   className="h-6 w-5 flex-none text-indigo-600"
                   aria-hidden="true"
                 />
-                AI powered conversations*
+                {dictionary?.tier_1?.feature_1}
               </li>
               <li className="flex gap-x-3">
                 <CheckIcon
                   className="h-6 w-5 flex-none text-indigo-600"
                   aria-hidden="true"
                 />
-                Omni channel platform integrating whatsApp, email and SMS
+                {dictionary?.tier_1?.feature_2}
               </li>
               <li className="flex gap-x-3">
                 <CheckIcon
                   className="h-6 w-5 flex-none text-indigo-600"
                   aria-hidden="true"
                 />
-                Tailored AI responses based on your data, products and brand
-                voice
+                {dictionary?.tier_1?.feature_3}
               </li>
               <li className="flex gap-x-3">
                 <CheckIcon
                   className="h-6 w-5 flex-none text-indigo-600"
                   aria-hidden="true"
                 />
-                Insightful analytics of customers sentiment and common issues
+                {dictionary?.tier_1?.feature_4}
               </li>
               <li className="flex gap-x-3">
                 <CheckIcon
                   className="h-6 w-5 flex-none text-indigo-600"
                   aria-hidden="true"
                 />
-                +100 languages support including Arabic and English
+                {dictionary?.tier_1?.feature_5}
               </li>
             </ul>
             <p className="mt-6 text-xs leading-5 text-gray-600">
-              * Up to 150 customers engaged per month.
+              {dictionary?.tier_1?.footnote}
             </p>
           </div>
           <a
@@ -93,7 +92,7 @@ export default function Pricing() {
             aria-describedby="standard-tier"
             className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Join the waitlist
+            {dictionary?.tier_1?.link}
           </a>
         </div>
 
@@ -103,11 +102,11 @@ export default function Pricing() {
               id="enterprise-tier"
               className="text-base font-semibold leading-7 text-indigo-600"
             >
-              Enterprise
+              {dictionary?.tier_2?.name}
             </h3>
             <div className="mt-4 flex items-baseline gap-x-2">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                Custom
+                {dictionary?.tier_2?.price}
               </span>
             </div>
             <ul
@@ -121,10 +120,9 @@ export default function Pricing() {
                 />
                 <span>
                   <span className="font-semibold">
-                    Direct Backend Integration.
+                    {dictionary?.tier_2?.feature_1?.str_1}
                   </span>{" "}
-                  Enable AI to perform actions like scheduling and refunds by
-                  connecting directly to your backend systems.
+                  {dictionary?.tier_2?.feature_1?.str_2}
                 </span>
               </li>
               <li className="flex gap-x-3">
@@ -134,10 +132,9 @@ export default function Pricing() {
                 />
                 <span>
                   <span className="font-semibold">
-                    Dedicated AI Training and Optimization.
+                    {dictionary?.tier_2?.feature_2?.str_1}
                   </span>{" "}
-                  Receive expert support to optimize your AI agent, ensuring
-                  perfect alignment with your complex business processes.
+                  {dictionary?.tier_2?.feature_2?.str_2}
                 </span>
               </li>
             </ul>
@@ -148,7 +145,7 @@ export default function Pricing() {
             aria-describedby="enterprise-tier"
             className="text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
           >
-            Contact our sales
+            {dictionary?.tier_2?.link}
           </a>
         </div>
       </div>
