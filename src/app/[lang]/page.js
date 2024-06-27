@@ -12,7 +12,7 @@ export default async function Home({ params: { lang } }) {
 
   return (
     <div className="bg-white">
-      <Header dictionary={dictionary?.home?.header} />
+      <Header dictionary={dictionary?.home?.header} currentLang={lang} />
       <main className="isolate">
         <Hero dictionary={dictionary?.home?.hero} />
         <Features dictionary={dictionary?.home?.features} />

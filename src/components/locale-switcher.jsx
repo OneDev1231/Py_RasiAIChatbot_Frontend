@@ -7,10 +7,8 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import clsx from "clsx";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export default function LocaleSwitcher() {
+export default function LocaleSwitcher({ currentLang }) {
   const pathName = usePathname();
-
-  const currentLocale = pathName.split("/")[1];
 
   const redirectedPathName = (locale) => {
     if (!pathName) return "/";
@@ -23,7 +21,7 @@ export default function LocaleSwitcher() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="flex capitalize gap-1 items-center text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600">
-          <span>{currentLocale}</span>
+          <span>{currentLang}</span>
           <ChevronDownIcon className="size-4" />
         </MenuButton>
       </div>
