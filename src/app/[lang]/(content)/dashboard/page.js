@@ -139,47 +139,45 @@ const Dashboard = () => {
     defaultOpen: false,
   });
   return (
-    <div className="h-screen flex flex-row">
+    <div className="w-full">
       <Popup isFirst={isOpen} onFirstChange={onOpenChange} />
-      <Menu />
-      <div className="flex-1 flex flex-col gap-2">
-        <Navbar />
-        <div className="flex-1 flex flex-row overflow-hidden">
-          <div className="w-1/5 flex flex-col justify-start items-stretch gap-2 px-2 overflow-y-auto">
-            <Button
-              className="flex items-center justify-center gap-2 border-b-2 cursor-pointer transition-all duration-100"
-              onClick={onOpen}
-            >
-              <FaPlus />
-              Add Chatbot
-            </Button>
-            <LeftBar />
-          </div>
-          <div className="w-4/5 shadow-lg flex flex-col justify-between overflow-y-auto">
-            {selectedChatbot ? (
-              <>
-                <div className="border mx-10 my-7 flex flex-col gap-2 justify-between">
-                  <div className="flex justify-center">
-                    <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center">
-                      Prompts
-                    </label>
-                  </div>
-                  <div className="w-full px-6 pb-3">
-                    <textarea
-                      id="multiline-input"
-                      type="text"
-                      className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
-                      placeholder={prompt}
-                      value={prompt}
-                    />{" "}
-                    {/*onChange={handlePromptChange} />} */}
-                  </div>
-                  {/* <div className='flex justify-end pb-3 px-6'>
+      {/* <Menu /> */}
+      <div className="flex-1 flex flex-row min-h-screen">
+        <div className="w-1/5 flex flex-col justify-start items-stretch gap-2 px-2 overflow-y-auto">
+          <Button
+            className="flex items-center justify-center gap-2 border-b-2 cursor-pointer transition-all duration-100"
+            onClick={onOpen}
+          >
+            <FaPlus />
+            Add Chatbot
+          </Button>
+          <LeftBar />
+        </div>
+        <div className="w-4/5 shadow-lg flex flex-col justify-between overflow-y-auto">
+          {selectedChatbot ? (
+            <>
+              <div className="border mx-10 my-7 flex flex-col gap-2 justify-between">
+                <div className="flex justify-center">
+                  <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center">
+                    Prompts
+                  </label>
+                </div>
+                <div className="w-full px-6 pb-3">
+                  <textarea
+                    id="multiline-input"
+                    type="text"
+                    className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
+                    placeholder={prompt}
+                    value={prompt}
+                  />{" "}
+                  {/*onChange={handlePromptChange} />} */}
+                </div>
+                {/* <div className='flex justify-end pb-3 px-6'>
                     <Button>Change</Button>
                   </div> */}
-                </div>
+              </div>
 
-                {/* <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
+              {/* <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
                   <div className='flex justify-center'>
                     <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embedded Plain Text</label>
                   </div>
@@ -191,70 +189,67 @@ const Dashboard = () => {
                   </div>
                 </div> */}
 
-                <div>
-                  <div className="border my-7 mx-10 flex flex-col gap-5 items-center">
-                    <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold">
-                      Uploaded Knowledge Base
-                    </label>
-                    <div className="w-full px-6 flex flex-col gap-2 rounded-lg">
-                      {selectedChatbot.files == null ? (
-                        <div>There is no file uploaded.</div>
-                      ) : (
-                        Array.from(selectedChatbot.files).map((item, i) => {
-                          return (
-                            <div
-                              key={i}
-                              className="flex flex-row justify-between items-center border rounded-lg px-2"
-                            >
-                              <p className="text-gray-700 dark:text-gray-200">
-                                {item}
-                              </p>
-                              <FaTrash
-                                onClick={() => handleDeleteUploadedFile(item)}
-                                className="cursor-pointer"
-                              />
-                            </div>
-                          );
-                        })
-                      )}
-                      <div className="flex justify-end">
-                        {/* <Button onClick={handleFileChange}>Upsert File</Button> */}
-                        <div className="flex flex-col items-center gap-3">
-                          <label
-                            className="bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer"
-                            htmlFor="file-upload"
+              <div>
+                <div className="border my-7 mx-10 flex flex-col gap-5 items-center">
+                  <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold">
+                    Uploaded Knowledge Base
+                  </label>
+                  <div className="w-full px-6 flex flex-col gap-2 rounded-lg">
+                    {selectedChatbot.files == null ? (
+                      <div>There is no file uploaded.</div>
+                    ) : (
+                      Array.from(selectedChatbot.files).map((item, i) => {
+                        return (
+                          <div
+                            key={i}
+                            className="flex flex-row justify-between items-center border rounded-lg px-2"
                           >
-                            Upload
-                          </label>
-                          <input
-                            id="file-upload"
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                            style={{ display: "none" }}
-                          />
-                          <div>{status}</div>
-                        </div>
+                            <p className="text-gray-700 dark:text-gray-200">
+                              {item}
+                            </p>
+                            <FaTrash
+                              onClick={() => handleDeleteUploadedFile(item)}
+                              className="cursor-pointer"
+                            />
+                          </div>
+                        );
+                      })
+                    )}
+                    <div className="flex justify-end">
+                      {/* <Button onClick={handleFileChange}>Upsert File</Button> */}
+                      <div className="flex flex-col items-center gap-3">
+                        <label
+                          className="bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer"
+                          htmlFor="file-upload"
+                        >
+                          Upload
+                        </label>
+                        <input
+                          id="file-upload"
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleFileChange}
+                          style={{ display: "none" }}
+                        />
+                        <div>{status}</div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div className="flex justify-end gap-2 pb-10 px-10">
-                  <Button onClick={handleTestChattingClick}>
-                    Test chatting
-                  </Button>
-                  {/* <Button onClick={() => router.push('/chatting')}>
+              <div className="flex justify-end gap-2 pb-10 px-10">
+                <Button onClick={handleTestChattingClick}>Test chatting</Button>
+                {/* <Button onClick={() => router.push('/chatting')}>
                       {selectedChatbot?.messages?.length ? 'Continue chatting': 'Start chatting' }
                   </Button> */}
-                </div>
-              </>
-            ) : (
-              <p className="text-lg p-4 text-center text-gray-500">
-                Please select a chatbot
-              </p>
-            )}
-          </div>
+              </div>
+            </>
+          ) : (
+            <p className="text-lg p-4 text-center text-gray-500">
+              Please select a chatbot
+            </p>
+          )}
         </div>
       </div>
     </div>
