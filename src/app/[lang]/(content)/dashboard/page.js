@@ -139,7 +139,7 @@ const Dashboard = () => {
     defaultOpen: false,
   });
   return (
-    <div className="w-full">
+    <div className="w-full bg-darkbg">
       <Popup isFirst={isOpen} onFirstChange={onOpenChange} />
       {/* <Menu /> */}
       <div className="flex-1 flex flex-row min-h-screen">
@@ -166,7 +166,7 @@ const Dashboard = () => {
                   <textarea
                     id="multiline-input"
                     type="text"
-                    className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
+                    className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-darkbg"
                     placeholder={prompt}
                     value={prompt}
                   />{" "}

@@ -7,20 +7,10 @@ body {
   font-family: sans-serif;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #a0aec0;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
-@layer base {
-  body {
-    @apply dark:bg-gray-800 bg-white;
-  }
+body {
+  @apply dark:bg-darkbg bg-white dark:text-white text-black;
 }

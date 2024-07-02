@@ -53,7 +53,6 @@ export default function Popup({ isFirst, onFirstChange }) {
 
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
-    console.log(files);
   };
   const [selectedKeys, setSelectedKeys] = React.useState(
     new Set(["Customer S"]),
@@ -86,6 +85,7 @@ export default function Popup({ isFirst, onFirstChange }) {
         isOpen={isFirst}
         shouldBlockScroll={false}
         onOpenChange={onFirstChange}
+        backdrop="blur"
       >
         <ModalContent>
           {(onClose) => (
@@ -155,7 +155,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                     <Select
                       variant="bordered"
                       name="company-industry"
-                      label="Select a company"
+                      label="company's industry"
                       className="max-w-xs"
                       isRequired
                     >
@@ -317,6 +317,7 @@ export default function Popup({ isFirst, onFirstChange }) {
         isOpen={isOpen}
         shouldBlockScroll={false}
         onOpenChange={onOpenChange}
+        backdrop="blur"
       >
         <ModalContent>
           {(onClose) => (
@@ -361,7 +362,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                     />
                   </div>
                   {files.length > 0 && (
-                    <div className="w-full mt-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+                    <div className="w-full mt-4 bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow-md">
                       <h3 className="text-gray-700 dark:text-gray-200 mb-2">
                         Uploaded Files:
                       </h3>
@@ -416,10 +417,7 @@ const UploadIcon = () => (
     height="100"
   >
     <g>
-      <polygon
-        fill="#CBC3E3"
-        points="184,176.1777 24,176.1777 24,148.1777 8,148.1777 8,192.1777 200,192.1777 200,148.1777 184,148.1777"
-      />
+      <polygon points="184,176.1777 24,176.1777 24,148.1777 8,148.1777 8,192.1777 200,192.1777 200,148.1777 184,148.1777" />
       <polygon
         fill="#5046E5"
         points="103.8711,40.3848 103.5898,40.1035 103.3086,40.3848"

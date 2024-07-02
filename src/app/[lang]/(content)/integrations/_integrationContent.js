@@ -51,7 +51,7 @@ const integrationContent = [
     id: 7,
     name: "𝕏",
     enabled: true,
-    image: "devicon:twitter",
+    image: "prime:twitter",
     linkTo: "https://www.twitter.com",
     category: "Social",
   },

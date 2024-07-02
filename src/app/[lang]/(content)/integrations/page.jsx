@@ -5,43 +5,20 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import "./animation.css";
 
-const list = [
-  {
-    text: "Account Profile",
-    icon: "iconamoon:profile-light",
-  },
-  {
-    text: "Billing and Upgrade",
-    icon: "solar:star-line-duotone",
-  },
-  {
-    text: "Add-Ons",
-    icon: "tabler:plus",
-  },
-  {
-    text: "Refer a Friend",
-    icon: "mdi:present-outline",
-  },
-  {
-    text: "Log Out",
-    icon: "material-symbols:logout",
-  },
-];
-
 export default function Page() {
   const [active, setActive] = useState("All");
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Nav active={active} setActive={setActive} />
-      <div className="flex flex-wrap  gap-6 bg-[#F3F4F8] dark:bg-zinc-950 p-10 items-center justify-center">
+      <div className="flex flex-wrap  gap-6  p-10 items-center justify-center">
         {IntegrationContent.map(
           (integration) =>
             (active === "All" || active === integration.category) && (
               <Link
                 href={integration.linkTo}
                 key={integration.id}
-                className="bg-white dark:bg-slate-500 min-w-[245px] py-10 rounded-lg flex flex-col gap-5 shadow-sm relative cursor-pointer hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="bg-white  dark:bg-darkbg  min-w-[245px] py-10 rounded-lg flex flex-col gap-5 shadow-sm relative cursor-pointer hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 {integration.enabled && (
                   <div className="h-5 w-5 absolute top-4 right-4 bg-green-500 rounded-full flex justify-center items-center">
@@ -64,8 +41,7 @@ export default function Page() {
                 <div className="flex justify-center">
                   <Icon
                     icon={integration.image}
-                    className="h-16 w-16"
-                    style={{ color: "#1A1A1A" }}
+                    className="h-16 w-16 dark:text-gray-200 text-gray-800"
                   />
                 </div>
                 <span className="text-center font-bold text-lg">
@@ -75,7 +51,7 @@ export default function Page() {
             ),
         )}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -94,18 +70,22 @@ const Nav = ({ active, setActive }) => {
 
   return (
     <>
-      <div className="flex gap-10 my-5">
-        <span className="font-bold text-xl ml-5">Integrations</span>
-        <ul className="flex lg:gap-5 gap-1 flex-col lg:flex-row">
-          {categories.map((category) => (
-            <NavItem
-              key={category}
-              category={category}
-              active={active}
-              setActive={setActive}
-            />
-          ))}
-        </ul>
+      <div className="h-[68px] dark:bg-[#0F0F12]"></div>
+      <div className="fixed w-full z-50">
+        <div className="flex gap-10 py-5 dark:bg-darkbg bg-white">
+          <span className="font-bold text-xl ml-5">Integrations</span>
+          <ul className="flex lg:gap-5 gap-1 flex-col lg:flex-row">
+            {categories.map((category) => (
+              <NavItem
+                key={category}
+                category={category}
+                active={active}
+                setActive={setActive}
+              />
+            ))}
+          </ul>
+        </div>
+        <hr className="border-t-[1px] border-[#E5E7EB] dark:border-[#3E3E3E]" />
       </div>
     </>
   );
@@ -114,9 +94,7 @@ const Nav = ({ active, setActive }) => {
 const NavItem = ({ category, active, setActive }) => {
   return (
     <li
-      className={`cursor-pointer w-fit select-none ${active === category
-          ? "border-b-orange-600 border-b-[2.5px]"
-          : "nav-item"
+      className={`cursor-pointer w-fit select-none ${active === category ? "border-b-primary border-b-[2.5px]" : "nav-item"
         }`}
       onClick={() => setActive(category)}
     >

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ToasterWrapper } from "@/components/ToastWrapper";
 import { ThemeProvider } from "next-themes";
+import { CookiesProvider } from "next-client-cookies/server";
 import StoreProvider from "./StoreProvider";
 import { i18n } from "../../../i18n-config";
 
@@ -45,9 +46,11 @@ export default function RootLayout({ children, params }) {
         className={params.lang === "ar" ? dubai.className : inter.className}
       >
         <StoreProvider>
-          <ThemeProvider attribute="class">
-            {children}
-            <ToasterWrapper />
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <CookiesProvider>
+              {children}
+              <ToasterWrapper />
+            </CookiesProvider>
           </ThemeProvider>
         </StoreProvider>
       </body>

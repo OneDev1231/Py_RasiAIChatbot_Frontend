@@ -4,11 +4,11 @@
 }
 
 .nav-item::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2.5px;
-  background: #ea580b;
+  background: #5046e5;
   transition: 0.3s;
   left: 50%;
   bottom: 0px;
