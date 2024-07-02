@@ -14,6 +14,10 @@ export default function LocaleSwitcher({ currentLang }) {
     if (!pathName) return "/";
     const segments = pathName.split("/");
     segments[1] = locale;
+    // set cookie for the selected language
+    // document.cookie = cookie.serialize("lang", locale, {
+    //   maxAge: 60 * 60 * 24 * 30,
+    // });
     return segments.join("/");
   };
 
@@ -40,7 +44,7 @@ export default function LocaleSwitcher({ currentLang }) {
                     href={redirectedPathName(locale)}
                     className={clsx(
                       focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm capitalize"
+                      "block px-4 py-2 text-sm capitalize",
                     )}
                   >
                     {locale}
