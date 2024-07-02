@@ -51,23 +51,22 @@ const styles = [
   { key: "professional", label: "Professional" },
 ];
 
-const [data, setData] = useState({
-  chatbot_name: "",
-  business_name: "",
-  industry: "",
-  primary_language: "",
-  selected_functions: "",
-  communication_style: "",
-  files: [],
-})
-
-
-
-const dispatch = useBotDispatch();
-
 export default function Popup({ isFirst, onFirstChange }) {
   const [files, setFiles] = useState([]);
 
+  const [data, setData] = React.useState({
+    chatbot_name: "",
+    business_name: "",
+    industry: "",
+    primary_language: "",
+    selected_functions: "",
+    communication_style: "",
+    files: [],
+  })
+  
+  
+  const dispatch = useBotDispatch();
+  
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
     setData((prevData) => ({

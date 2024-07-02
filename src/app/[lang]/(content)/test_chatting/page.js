@@ -20,7 +20,7 @@ const TestChatting = () => {
       dispatch(setMessageGroup(response.messages));
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, chatbotName]);
   return (
     <div className="h-screen bg-gray-200 dark:bg-black flex flex-row justify-start">
       <div className="w-full h-full">
