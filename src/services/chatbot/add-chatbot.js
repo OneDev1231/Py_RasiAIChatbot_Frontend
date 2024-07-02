@@ -2,8 +2,13 @@ import axios from 'axios';
 
 export const add_new_chatbot = async (chatbot_data) => {
     const formData = new FormData();
-    formData.append("name", chatbot_data.name);
-    formData.append("prompt", chatbot_data.prompt);
+    formData.append("chatbot_name", chatbot_data.chatbot_name);
+    formData.append("business_name", chatbot_data.business_name);
+    formData.append("industry", chatbot_data.industry);
+    formData.append("primary_language", chatbot_data.primary_language);
+    formData.append("selected_functions", chatbot_data.selected_functions);
+    formData.append("communication_style", chatbot_data.communication_style);
+
     chatbot_data.files.forEach((file) => {
         formData.append("files", file); // Ensure files are appended correctly
     });

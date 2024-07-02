@@ -18,6 +18,9 @@ import {
   useDisclosure,
   SelectItem,
 } from "@nextui-org/react";
+import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
+import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
+import { addChatbot } from "@/lib/features/dashboardSlice";
 
 const companyChoices = [
   { key: "E-commerce", label: "E-commerce" },
@@ -48,11 +51,29 @@ const styles = [
   { key: "professional", label: "Professional" },
 ];
 
+const [data, setData] = useState({
+  chatbot_name: "",
+  business_name: "",
+  industry: "",
+  primary_language: "",
+  selected_functions: "",
+  communication_style: "",
+  files: [],
+})
+
+
+
+const dispatch = useBotDispatch();
+
 export default function Popup({ isFirst, onFirstChange }) {
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
   };
   const [selectedKeys, setSelectedKeys] = React.useState(
     new Set(["Customer S"]),
@@ -63,7 +84,31 @@ export default function Popup({ isFirst, onFirstChange }) {
     event.stopPropagation();
     const droppedFiles = Array.from(event.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
   };
+
+  const handleAddChatbot = async (event) => {
+    event.preventDefault();
+    try {
+      const status_code = await add_new_chatbot(data);
+      console.log(status_code)
+      if (status_code == 200) {
+        dispatch(addChatbot({name: data.name, prompt: data.prompt, files: data.files.map(file => file.name)}));
+        toast.success("Chatbot is added successfully!")
+      }
+      else {
+        toast.error("Error creating chatbot");
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false);
+      router.push('/dashboard');
+    }
+  }
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -102,7 +147,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                   e.preventDefault();
                   onOpen();
                   onClose();
-                  //TODO: Send data to the server
+                  //TODO: set request data
                   console.log(
                     e.target["chatbot-name"].value,
                     e.target["business-name"].value,
@@ -111,6 +156,15 @@ export default function Popup({ isFirst, onFirstChange }) {
                     selectedValue,
                     e.target["agent-style"].value,
                   );
+                  setData({
+                    ...data,
+                    chatbot_name: e.target["chatbot-name"].value,
+                    business_name: e.target["business-name"].value,
+                    industry: e.target["company-industry"].value,
+                    primary_language: e.target["company-language"].value,
+                    selected_functions: e.target["company-language"].value,
+                    communication_style: e.target["agent-style"].value,
+                  })
                 }}
               >
                 <label
