@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { LeftBar } from "@/components/dash";
-import { Menu } from "@/components/menu";
-import { Navbar } from "@/components/navbar";
+import { Info } from "lucide-react";
 import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
+import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/elements";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { ChatLayout } from "@/chatComponenets/chat/chat-layout";
+import { Button as Button2 } from "@nextui-org/react";
 import withAuth from "@/services/auth/hoc";
 import {
   existing_chatbot_upsert_file,
@@ -20,12 +19,26 @@ import {
 } from "@/lib/features/dashboardSlice";
 import { getChatbots } from "@/services/chatbot/get-chatbots";
 import toast from "react-hot-toast";
-import { useDisclosure } from "@nextui-org/react";
+import { useDisclosure, Select, SelectItem, Input } from "@nextui-org/react";
 import Popup from "@/components/Popups";
+import LogedInNav from "@/components/logedInNav";
+import { Icon } from "@iconify/react";
 
 const Dashboard = () => {
-  const { selectedChatbot } = useBotSelector((state) => state.dashboard);
+  const { selectedChatbot, chatbots } = useBotSelector(
+    (state) => state.dashboard,
+  );
+
   const dispatch = useBotDispatch();
+
+  const handleSelect = (item) => {
+    if (item.id === selectedChatbot?.id) {
+      dispatch(selectChatBot(null));
+      return;
+    }
+    dispatch(selectChatBot(item));
+  };
+
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [text, setText] = useState("");
@@ -138,121 +151,104 @@ const Dashboard = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure({
     defaultOpen: false,
   });
+
+  const [rightOpen, setRightOpen] = useState(false);
+  const cookies = useCookies();
+
+  const layout = cookies.get("react-resizable-panels:layout");
+  const defaultLayout = layout ? JSON.parse(layout) : undefined;
   return (
-    <div className="w-full bg-darkbg">
-      <Popup isFirst={isOpen} onFirstChange={onOpenChange} />
-      {/* <Menu /> */}
-      <div className="flex-1 flex flex-row min-h-screen">
-        <div className="w-1/5 flex flex-col justify-start items-stretch gap-2 px-2 overflow-y-auto">
-          <Button
-            className="flex items-center justify-center gap-2 border-b-2 cursor-pointer transition-all duration-100"
-            onClick={onOpen}
-          >
-            <FaPlus />
-            Add Chatbot
-          </Button>
-          <LeftBar />
+    <>
+      <LogedInNav>
+        <div class="flex justify-between w-full">
+          <Input
+            isClearable
+            radius="lg"
+            className="w-96"
+            classNames={{
+              label: "text-black/50 dark:text-white/90",
+              input: [
+                "bg-transparent",
+                "text-black/90 dark:text-white/90",
+                "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+              ],
+              innerWrapper: "bg-transparent",
+              inputWrapper: [
+                "shadow-xl",
+                "bg-default-200/50",
+                "dark:bg-default/60",
+                "backdrop-blur-xl",
+                "backdrop-saturate-200",
+                "hover:bg-default-200/70",
+                "dark:hover:bg-default/70",
+                "group-data-[focus=true]:bg-default-200/50",
+                "dark:group-data-[focus=true]:bg-default/60",
+                "!cursor-text",
+              ],
+            }}
+            placeholder="Type to search..."
+            startContent={
+              <Icon
+                icon="fe:search"
+                className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0"
+              />
+            }
+          />
+          <div className="flex gap-5 w-[500px]">
+            <Select
+              variant="bordered"
+              name="company-industry"
+              placeholder="Select an Agent"
+              className="max-w-xs"
+              isRequired
+            >
+              {chatbots.map((choice) => (
+                <SelectItem
+                  key={choice.key}
+                  onClick={() => handleSelect(choice)}
+                >
+                  {choice.name}
+                </SelectItem>
+              ))}
+            </Select>
+            <Button2
+              color="primary"
+              endContent={<Icon icon="material-symbols:add" />}
+              onClick={onOpen}
+            >
+              Add Agent
+            </Button2>
+          </div>
         </div>
-        <div className="w-4/5 shadow-lg flex flex-col justify-between overflow-y-auto">
-          {selectedChatbot ? (
-            <>
-              <div className="border mx-10 my-7 flex flex-col gap-2 justify-between">
-                <div className="flex justify-center">
-                  <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center">
-                    Prompts
-                  </label>
-                </div>
-                <div className="w-full px-6 pb-3">
-                  <textarea
-                    id="multiline-input"
-                    type="text"
-                    className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-darkbg"
-                    placeholder={prompt}
-                    value={prompt}
-                  />{" "}
-                  {/*onChange={handlePromptChange} />} */}
-                </div>
-                {/* <div className='flex justify-end pb-3 px-6'>
-                    <Button>Change</Button>
-                  </div> */}
-              </div>
+      </LogedInNav>
+      <div className="w-full">
+        <Popup isFirst={isOpen} onFirstChange={onOpenChange} />
+        <div className="flex-1 flex flex-row min-h-[calc(100vh-68px)]">
+          <div className="w-full shadow-lg flex flex-col justify-between overflow-y-auto max-h-[calc(100vh-68px)] relative">
+            {/* here comes the shitty part */}
 
-              {/* <div className='border mx-10 my-7 flex flex-col gap-2 justify-between'>
-                  <div className='flex justify-center'>
-                    <label className='pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold items-center'>Embedded Plain Text</label>
-                  </div>
-                  <div className='w-full px-6'>
-                    <textarea id='multiline-input' type='text' className="flex overflow-y-auto w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700" placeholder="Please write the plain text to embed" value={text} onChange={handleTextChange}/>
-                  </div>
-                  <div className='flex justify-end pb-3 px-6'>
-                    <Button onClick={handleTextUpsert}>Upsert</Button>
-                  </div>
-                </div> */}
+            <div
+              className="h-9 w-9 dark:bg-muted dark:text-muted-foreground active:scale-90 dark:hover:bg-muted dark:hover:text-white absolute top-6 right-4 hover:cursor-pointer"
+              onClick={() => setRightOpen(!rightOpen)}
+            >
+              <Info size={20} className="text-muted-foreground" />
+            </div>
 
-              <div>
-                <div className="border my-7 mx-10 flex flex-col gap-5 items-center">
-                  <label className="pt-3 text-lg text-gray-700 dark:text-gray-200 font-semibold">
-                    Uploaded Knowledge Base
-                  </label>
-                  <div className="w-full px-6 flex flex-col gap-2 rounded-lg">
-                    {selectedChatbot.files == null ? (
-                      <div>There is no file uploaded.</div>
-                    ) : (
-                      Array.from(selectedChatbot.files).map((item, i) => {
-                        return (
-                          <div
-                            key={i}
-                            className="flex flex-row justify-between items-center border rounded-lg px-2"
-                          >
-                            <p className="text-gray-700 dark:text-gray-200">
-                              {item}
-                            </p>
-                            <FaTrash
-                              onClick={() => handleDeleteUploadedFile(item)}
-                              className="cursor-pointer"
-                            />
-                          </div>
-                        );
-                      })
-                    )}
-                    <div className="flex justify-end">
-                      {/* <Button onClick={handleFileChange}>Upsert File</Button> */}
-                      <div className="flex flex-col items-center gap-3">
-                        <label
-                          className="bg-blue-500 text-white px-5 py-2 rounded-md cursor-pointer"
-                          htmlFor="file-upload"
-                        >
-                          Upload
-                        </label>
-                        <input
-                          id="file-upload"
-                          type="file"
-                          ref={fileInputRef}
-                          onChange={handleFileChange}
-                          style={{ display: "none" }}
-                        />
-                        <div>{status}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-2 pb-10 px-10">
-                <Button onClick={handleTestChattingClick}>Test chatting</Button>
-                {/* <Button onClick={() => router.push('/chatting')}>
-                      {selectedChatbot?.messages?.length ? 'Continue chatting': 'Start chatting' }
-                  </Button> */}
-              </div>
-            </>
-          ) : (
-            <p className="text-lg p-4 text-center text-gray-500">
-              Please select a chatbot
-            </p>
-          )}
+            <ChatLayout defaultLayout={defaultLayout} navCollapsedSize={8} />
+          </div>
+          <div
+            className={`${rightOpen ? "w-1/5 px-2" : "w-0 px-0"} flex transition-all duration-300 flex-col justify-start items-stretch gap-2  overflow-y-auto bg-white dark:bg-transparent
+`}
+          >
+            <div
+              className={`${rightOpen ? "block" : "hidden"} flex flex-col gap-2 items-center justify-center text-xl mt-5`}
+            >
+              Session Details
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

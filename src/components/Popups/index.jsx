@@ -128,10 +128,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                   className="mb-2"
                   required
                 />
-                <label
-                  htmlFor="business-name"
-                  className="text-gray-700 dark:text-gray-200 text-sm"
-                >
+                <label className="text-gray-700 dark:text-gray-200 text-sm">
                   Business name
                 </label>
                 <Textarea
