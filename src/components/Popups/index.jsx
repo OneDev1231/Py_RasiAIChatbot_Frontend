@@ -21,6 +21,7 @@ import {
 import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
 import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
 import { addChatbot } from "@/lib/features/dashboardSlice";
+import toast from "react-hot-toast";
 
 const companyChoices = [
   { key: "E-commerce", label: "E-commerce" },
@@ -52,7 +53,7 @@ const styles = [
 ];
 
 export default function Popup({ isFirst, onFirstChange }) {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = React.useState([]);
 
   const [data, setData] = React.useState({
     chatbot_name: "",
@@ -89,23 +90,25 @@ export default function Popup({ isFirst, onFirstChange }) {
     }));
   };
 
-  const handleAddChatbot = async (event) => {
+  const handleAddChatbot = async (event, onClose) => {
     event.preventDefault();
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
     try {
-      const status_code = await add_new_chatbot(data);
-      console.log(status_code)
-      if (status_code == 200) {
-        dispatch(addChatbot({name: data.name, prompt: data.prompt, files: data.files.map(file => file.name)}));
+      const result = await add_new_chatbot(data);
+      if (result[0] == 200) {
+        console.log(result[1])
+        dispatch(addChatbot({name: data.chatbot_name, prompt: result[1], files: data.files.map(file => file.name)}));
         toast.success("Chatbot is added successfully!")
+        onClose();
       }
       else {
         toast.error("Error creating chatbot");
       }
     } catch (error) {
       console.log(error)
-    } finally {
-      setLoading(false);
-      router.push('/dashboard');
     }
   }
 
@@ -161,7 +164,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                     business_name: e.target["business-name"].value,
                     industry: e.target["company-industry"].value,
                     primary_language: e.target["company-language"].value,
-                    selected_functions: e.target["company-language"].value,
+                    selected_functions: selectedValue,
                     communication_style: e.target["agent-style"].value,
                   })
                 }}
@@ -447,7 +450,11 @@ export default function Popup({ isFirst, onFirstChange }) {
                     >
                       Cancel
                     </Button>
-                    <Button color="primary" type="submit">
+                    <Button
+                      color="primary"
+                      type="submit"
+                      onClick={(event) => handleAddChatbot(event, onClose)}
+                    >
                       Done
                     </Button>
                   </div>

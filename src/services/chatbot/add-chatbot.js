@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const add_new_chatbot = async (chatbot_data) => {
+    console.log(chatbot_data)
     const formData = new FormData();
     formData.append("chatbot_name", chatbot_data.chatbot_name);
     formData.append("business_name", chatbot_data.business_name);
@@ -21,9 +22,14 @@ export const add_new_chatbot = async (chatbot_data) => {
             withCredentials: true
         });
         console.log('File uploaded successfully:', response);
-        return response.status;
+        const status_code = response.status;
+        const prompt_text = response.data.prompt;
+
+        console.log('Status Code:', status_code);
+        console.log('Prompt Text:', prompt_text);
+        return [status_code, prompt_text];
     } catch (error) {
         console.error('Error uploading response:', error.response);
-        return error.response.status;
+        return [error.response.status, null];
     }
 }
