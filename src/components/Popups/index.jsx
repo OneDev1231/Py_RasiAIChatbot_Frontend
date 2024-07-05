@@ -18,8 +18,9 @@ import {
   useDisclosure,
   SelectItem,
 } from "@nextui-org/react";
-import { addChatbot } from "@/lib/features/dashboardSlice";
 import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
+import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
+import { addChatbot } from "@/lib/features/dashboardSlice";
 import toast from "react-hot-toast";
 
 const companyChoices = [
@@ -52,11 +53,27 @@ const styles = [
 ];
 
 export default function Popup({ isFirst, onFirstChange }) {
-  const [files, setFiles] = useState([]);
-  const [data, setData] = useState({});
+  const [files, setFiles] = React.useState([]);
 
+  const [data, setData] = React.useState({
+    chatbot_name: "",
+    business_name: "",
+    industry: "",
+    primary_language: "",
+    selected_functions: "",
+    communication_style: "",
+    files: [],
+  })
+  
+  
+  const dispatch = useBotDispatch();
+  
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
   };
   const [selectedKeys, setSelectedKeys] = React.useState(
     new Set(["Customer S"]),
@@ -67,7 +84,33 @@ export default function Popup({ isFirst, onFirstChange }) {
     event.stopPropagation();
     const droppedFiles = Array.from(event.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
   };
+
+  const handleAddChatbot = async (event, onClose) => {
+    event.preventDefault();
+    setData((prevData) => ({
+      ...prevData,
+      files: files
+    }));
+    try {
+      const result = await add_new_chatbot(data);
+      if (result[0] == 200) {
+        console.log(result[1])
+        dispatch(addChatbot({name: data.chatbot_name, prompt: result[1], files: data.files.map(file => file.name)}));
+        toast.success("Chatbot is added successfully!")
+        onClose();
+      }
+      else {
+        toast.error("Error creating chatbot");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -142,15 +185,24 @@ export default function Popup({ isFirst, onFirstChange }) {
                   e.preventDefault();
                   onOpen();
                   onClose();
-                  const data = {
-                    name: e.target["chatbot-name"].value,
-                    business: e.target["business-name"].value,
+                  //TODO: set request data
+                  console.log(
+                    e.target["chatbot-name"].value,
+                    e.target["business-name"].value,
+                    e.target["company-industry"].value,
+                    e.target["company-language"].value,
+                    selectedValue,
+                    e.target["agent-style"].value,
+                  );
+                  setData({
+                    ...data,
+                    chatbot_name: e.target["chatbot-name"].value,
+                    business_name: e.target["business-name"].value,
                     industry: e.target["company-industry"].value,
-                    language: e.target["company-language"].value,
-                    functions: selectedValue,
-                    style: e.target["agent-style"].value,
-                  };
-                  setData(data);
+                    primary_language: e.target["company-language"].value,
+                    selected_functions: selectedValue,
+                    communication_style: e.target["agent-style"].value,
+                  })
                 }}
               >
                 <label
@@ -433,7 +485,11 @@ export default function Popup({ isFirst, onFirstChange }) {
                     >
                       Cancel
                     </Button>
-                    <Button color="primary" type="submit">
+                    <Button
+                      color="primary"
+                      type="submit"
+                      onClick={(event) => handleAddChatbot(event, onClose)}
+                    >
                       Done
                     </Button>
                   </div>
