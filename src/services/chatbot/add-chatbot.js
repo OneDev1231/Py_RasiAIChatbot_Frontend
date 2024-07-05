@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const add_new_chatbot = async (chatbot_data) => {
-    console.log(chatbot_data)
+    console.log(chatbot_data);
     const formData = new FormData();
     formData.append("chatbot_name", chatbot_data.chatbot_name);
     formData.append("business_name", chatbot_data.business_name);
@@ -15,21 +15,25 @@ export const add_new_chatbot = async (chatbot_data) => {
     });
 
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/add_chatbot`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/add_chatbot`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                withCredentials: true,
             },
-            withCredentials: true
-        });
-        console.log('File uploaded successfully:', response);
+        );
+        console.log("File uploaded successfully:", response);
         const status_code = response.status;
         const prompt_text = response.data.prompt;
 
-        console.log('Status Code:', status_code);
-        console.log('Prompt Text:', prompt_text);
+        console.log("Status Code:", status_code);
+        console.log("Prompt Text:", prompt_text);
         return [status_code, prompt_text];
     } catch (error) {
-        console.error('Error uploading response:', error.response);
+        console.error("Error uploading response:", error.response);
         return [error.response.status, null];
     }
-}
+};

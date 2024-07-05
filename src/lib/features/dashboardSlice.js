@@ -45,7 +45,7 @@ export const dashboardSlice = createSlice({
     },
     selectChatBot: (state, action) => {
       state.selectedChatbot = action.payload;
-      Cookies.set("selectedChatbot", action.payload.id);
+      Cookies.set("selectedChatbot", action.payload?.id);
     },
     updateChatbot: (state, action) => {
       const { id, newFile, text } = action.payload;

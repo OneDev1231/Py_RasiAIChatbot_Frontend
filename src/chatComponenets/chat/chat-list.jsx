@@ -230,15 +230,3 @@ export function ChatList({
     </div>
   );
 }
-
-const typingIndicator = () => {
-  return (
-    <div class="ticontainer">
-      <div class="tiblock">
-        <div class="tidot"></div>
-        <div class="tidot"></div>
-        <div class="tidot"></div>
-      </div>
-    </div>
-  );
-};

@@ -60,18 +60,18 @@ export function Sidebar({ links, isCollapsed, isMobile, setIsTest }) {
               <TooltipProvider key={index}>
                 <Tooltip key={index} delayDuration={0}>
                   <TooltipTrigger asChild>
-                    <Link
-                      href="#"
+                    <button
                       className={cn(
                         buttonVariants({ variant: link.variant, size: "icon" }),
                         "h-11 w-11 md:h-16 md:w-16",
                         link.variant === "grey" &&
                         "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                       )}
+                    // onClick={() => setIsTest(false)}
                     >
                       <Avatar className="flex justify-center items-center">
                         <AvatarImage
-                          src={link.avatar}
+                          src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
                           alt={link.avatar}
                           width={6}
                           height={6}
@@ -79,7 +79,7 @@ export function Sidebar({ links, isCollapsed, isMobile, setIsTest }) {
                         />
                       </Avatar>{" "}
                       <span className="sr-only">{link.name}</span>
-                    </Link>
+                    </button>
                   </TooltipTrigger>
                   <TooltipContent
                     side="right"

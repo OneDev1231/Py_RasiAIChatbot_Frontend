@@ -9,9 +9,11 @@ import withAuth from "@/services/auth/hoc";
 import { selectChatBot, setSlice } from "@/lib/features/dashboardSlice";
 import { getChatbots } from "@/services/chatbot/get-chatbots";
 import { useDisclosure, Select, SelectItem, Input } from "@nextui-org/react";
+import robot from "@/images/Graident AI Robot.png";
 import Popup from "@/components/Popups";
 import LogedInNav from "@/components/logedInNav";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 const Dashboard = () => {
   const { selectedChatbot, chatbots } = useBotSelector(
@@ -115,8 +117,14 @@ const Dashboard = () => {
             </div>
           </div>
         </LogedInNav>
-        <div className="flex justify-center items-center h-screen w-full">
-          <h1 className="text-3xl">Select a chatbot to start chatting</h1>
+        <div
+          className="flex flex-col justify-center items-center h-screen w-full"
+          i
+        >
+          <Image src={robot} alt="robot" className="w-[30%] h-1/2" />
+          <h1 className="text-3xl font-bold text-center">
+            Create or Select an agent to start
+          </h1>
         </div>
       </>
     );
@@ -138,7 +146,7 @@ const Dashboard = () => {
                 "placeholder:text-default-700/50 dark:placeholder:text-white/60",
               ],
               innerWrapper: "bg-transparent",
-              inputWrapper: [
+              inputWjjrapper: [
                 "shadow-xl",
                 "bg-default-200/50",
                 "dark:bg-default/60",
