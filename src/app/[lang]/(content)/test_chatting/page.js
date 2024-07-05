@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { ChatBoxView } from "@/components/chatbox";
-import { Menu } from "@/components/menu";
 import withAuth from "@/services/auth/hoc";
 import { useSearchParams } from "next/navigation";
 import { getTestMessageGroup } from "@/services/messages/get-messageGroup";

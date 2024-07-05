@@ -63,17 +63,44 @@ export default function Popup({ isFirst, onFirstChange }) {
     selected_functions: "",
     communication_style: "",
     files: [],
-  })
-  
-  
+  });
+
   const dispatch = useBotDispatch();
-  
+
+  const handleAddChatbot = async (files) => {
+    console.log("files : ");
+    console.log(files);
+    try {
+      const result = await add_new_chatbot({
+        chatbot_name: data.chatbot_name,
+        business_name: data.business_name,
+        industry: data.industry,
+        primary_language: data.primary_language,
+        selected_functions: data.selected_functions,
+        communication_style: data.communication_style,
+        files: files,
+      });
+      if (result[0] == 200) {
+        console.log(result[1]);
+        dispatch(
+          addChatbot({
+            name: data.chatbot_name,
+            prompt: result[1],
+            files: data.files.map((file) => file.name),
+          }),
+        );
+        toast.success("Chatbot is added successfully!");
+        onClose();
+      } else {
+        toast.error("Error creating chatbot");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
-    setData((prevData) => ({
-      ...prevData,
-      files: files
-    }));
   };
   const [selectedKeys, setSelectedKeys] = React.useState(
     new Set(["Customer S"]),
@@ -84,33 +111,7 @@ export default function Popup({ isFirst, onFirstChange }) {
     event.stopPropagation();
     const droppedFiles = Array.from(event.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
-    setData((prevData) => ({
-      ...prevData,
-      files: files
-    }));
   };
-
-  const handleAddChatbot = async (event, onClose) => {
-    event.preventDefault();
-    setData((prevData) => ({
-      ...prevData,
-      files: files
-    }));
-    try {
-      const result = await add_new_chatbot(data);
-      if (result[0] == 200) {
-        console.log(result[1])
-        dispatch(addChatbot({name: data.chatbot_name, prompt: result[1], files: data.files.map(file => file.name)}));
-        toast.success("Chatbot is added successfully!")
-        onClose();
-      }
-      else {
-        toast.error("Error creating chatbot");
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -159,14 +160,15 @@ export default function Popup({ isFirst, onFirstChange }) {
                     e.target["agent-style"].value,
                   );
                   setData({
-                    ...data,
+                    // ...data,
                     chatbot_name: e.target["chatbot-name"].value,
                     business_name: e.target["business-name"].value,
                     industry: e.target["company-industry"].value,
                     primary_language: e.target["company-language"].value,
                     selected_functions: selectedValue,
                     communication_style: e.target["agent-style"].value,
-                  })
+                    files: [],
+                  });
                 }}
               >
                 <label
@@ -184,10 +186,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                   className="mb-2"
                   required
                 />
-                <label
-                  htmlFor="business-name"
-                  className="text-gray-700 dark:text-gray-200 text-sm"
-                >
+                <label className="text-gray-700 dark:text-gray-200 text-sm">
                   Business name
                 </label>
                 <Textarea
@@ -390,8 +389,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                 onSubmit={(e) => {
                   e.preventDefault();
                   onClose();
-                  //TODO: Send data to the server
-                  console.log(files);
+                  handleAddChatbot(files);
                   setFiles([]);
                 }}
               >
@@ -450,11 +448,7 @@ export default function Popup({ isFirst, onFirstChange }) {
                     >
                       Cancel
                     </Button>
-                    <Button
-                      color="primary"
-                      type="submit"
-                      onClick={(event) => handleAddChatbot(event, onClose)}
-                    >
+                    <Button color="primary" type="submit">
                       Done
                     </Button>
                   </div>

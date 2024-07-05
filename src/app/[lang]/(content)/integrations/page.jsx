@@ -4,13 +4,37 @@ import IntegrationContent from "./_integrationContent";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import "./animation.css";
+import LogedInNav from "@/components/logedInNav";
+
+const categories = [
+  "All",
+  "Ads",
+  "Analytics",
+  "Ecommerce",
+  "Email",
+  "Phone",
+  "Local",
+  "SEO",
+  "Social",
+];
 
 export default function Page() {
   const [active, setActive] = useState("All");
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Nav active={active} setActive={setActive} />
+    <>
+      <LogedInNav fixed>
+        <ul className="flex lg:gap-5 gap-1 flex-col lg:flex-row">
+          {categories.map((category) => (
+            <NavItem
+              key={category}
+              category={category}
+              active={active}
+              setActive={setActive}
+            />
+          ))}
+        </ul>
+      </LogedInNav>
       <div className="flex flex-wrap  gap-6  p-10 items-center justify-center">
         {IntegrationContent.map(
           (integration) =>
@@ -51,45 +75,9 @@ export default function Page() {
             ),
         )}
       </div>
-    </div>
-  );
-}
-
-const Nav = ({ active, setActive }) => {
-  const categories = [
-    "All",
-    "Ads",
-    "Analytics",
-    "Ecommerce",
-    "Email",
-    "Phone",
-    "Local",
-    "SEO",
-    "Social",
-  ];
-
-  return (
-    <>
-      <div className="h-[68px] dark:bg-[#0F0F12]"></div>
-      <div className="fixed w-full z-50">
-        <div className="flex gap-10 py-5 dark:bg-darkbg bg-white">
-          <span className="font-bold text-xl ml-5">Integrations</span>
-          <ul className="flex lg:gap-5 gap-1 flex-col lg:flex-row">
-            {categories.map((category) => (
-              <NavItem
-                key={category}
-                category={category}
-                active={active}
-                setActive={setActive}
-              />
-            ))}
-          </ul>
-        </div>
-        <hr className="border-t-[1px] border-[#E5E7EB] dark:border-[#3E3E3E]" />
-      </div>
     </>
   );
-};
+}
 
 const NavItem = ({ category, active, setActive }) => {
   return (
