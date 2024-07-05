@@ -11,9 +11,7 @@ import {
   TooltipProvider,
 } from "@/chatComponenets/ui/tooltip";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import { Message } from "@/data";
 import { Button } from "@nextui-org/react";
-import { Icon } from "@iconify/react";
 
 export function Sidebar({ links, isCollapsed, isMobile, setIsTest }) {
   return (
@@ -128,22 +126,10 @@ export function Sidebar({ links, isCollapsed, isMobile, setIsTest }) {
           )}
         </nav>
       </div>
-      <div className="relative self-center group">
-        <Icon
-          className="absolute opacity-0 top-[-10px] left-5 group-hover:top-[-50px] group-hover:animate-bounce group-hover:opacity-100 transition-all duration-300 ease-in-out"
-          icon="noto:test-tube"
-          width="48"
-          height="48"
-        />
-        <Icon
-          className="absolute right-5 top-[-10px] group-hover:top-[-50px] opacity-0 group-hover:animate-bounce group-hover:opacity-100 transition-all duration-300 ease-in-out"
-          icon="fluent-emoji:robot"
-          width="48"
-          height="48"
-        />
+      <div className="flex justify-center">
         <Button
           radius="full"
-          className="bg-gradient-to-tr from-[#5046E5] to-purple-500 text-white shadow-lg mb-5 px-10 py-3"
+          className="bg-gradient-to-tr from-[#5046E5] to-purple-500 text-white shadow-lg mb-5 w-44 py-3"
           onClick={() => setIsTest(true)}
         >
           Test it yourself!
