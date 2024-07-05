@@ -19,7 +19,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Paperclip }];
 
-export default function ChatBottombar({ sendMessage, isMobile }) {
+export default function ChatBottombar({
+  sendMessage,
+  isMobile,
+  setTyping,
+  isTest,
+}) {
   const [message, setMessage] = useState("");
   const inputRef = useRef();
 
@@ -40,6 +45,7 @@ export default function ChatBottombar({ sendMessage, isMobile }) {
 
   const handleSend = () => {
     if (message.trim()) {
+      if (isTest) setTyping(true);
       const newMessage = {
         id: message.length + 1,
         name: loggedInUserData.name,

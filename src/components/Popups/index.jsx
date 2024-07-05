@@ -18,6 +18,9 @@ import {
   useDisclosure,
   SelectItem,
 } from "@nextui-org/react";
+import { addChatbot } from "@/lib/features/dashboardSlice";
+import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
+import toast from "react-hot-toast";
 
 const companyChoices = [
   { key: "E-commerce", label: "E-commerce" },
@@ -50,6 +53,7 @@ const styles = [
 
 export default function Popup({ isFirst, onFirstChange }) {
   const [files, setFiles] = useState([]);
+  const [data, setData] = useState({});
 
   const handleFileChange = (event) => {
     setFiles([...files, ...event.target.files]);
@@ -79,6 +83,42 @@ export default function Popup({ isFirst, onFirstChange }) {
     defaultOpen: false,
   });
 
+  const handleAddChatbot = async (name, files) => {
+    // if (files.length == 0) {
+    //   toast.dismiss();
+    //   toast.error(
+    //     "Please upload the files \n .docx, .pdf, .json, .csv, .pptx, .xlsx are available",
+    //   );
+    //   return;
+    // }
+    // setLoading(true);
+    try {
+      const status_code = await add_new_chatbot({
+        name: name,
+        prompt: "this chat be has to be friendly and helpful",
+        files: files,
+      });
+      if (status_code == 200) {
+        dispatch(
+          addChatbot({
+            name: data.name,
+            //FIX: change this later
+            prompt: "this chat bot has to be friendly and helpful",
+            files: data.files.map((file) => file.name),
+          }),
+        );
+        toast.success("Chatbot is added successfully!");
+      } else {
+        toast.error("Error creating chatbot");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // setLoading(false);
+      // refresh the page
+    }
+  };
+
   return (
     <>
       <Modal
@@ -102,15 +142,15 @@ export default function Popup({ isFirst, onFirstChange }) {
                   e.preventDefault();
                   onOpen();
                   onClose();
-                  //TODO: Send data to the server
-                  console.log(
-                    e.target["chatbot-name"].value,
-                    e.target["business-name"].value,
-                    e.target["company-industry"].value,
-                    e.target["company-language"].value,
-                    selectedValue,
-                    e.target["agent-style"].value,
-                  );
+                  const data = {
+                    name: e.target["chatbot-name"].value,
+                    business: e.target["business-name"].value,
+                    industry: e.target["company-industry"].value,
+                    language: e.target["company-language"].value,
+                    functions: selectedValue,
+                    style: e.target["agent-style"].value,
+                  };
+                  setData(data);
                 }}
               >
                 <label
@@ -333,6 +373,8 @@ export default function Popup({ isFirst, onFirstChange }) {
                   onClose();
                   //TODO: Send data to the server
                   console.log(files);
+                  console.log(data);
+                  handleAddChatbot(data.name, files);
                   setFiles([]);
                 }}
               >

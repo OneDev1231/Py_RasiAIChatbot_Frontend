@@ -15,10 +15,12 @@ export function ChatLayout({
   defaultLayout = [320, 480],
   defaultCollapsed = false,
   navCollapsedSize,
+  selectedChatBot,
 }) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [selectedUser, setSelectedUser] = React.useState(userData[0]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTest, setIsTest] = useState(false);
 
   useEffect(() => {
     const checkScreenWidth = () => {
@@ -72,6 +74,7 @@ export function ChatLayout({
       >
         <Sidebar
           isCollapsed={isCollapsed || isMobile}
+          setIsTest={setIsTest}
           links={userData.map((user) => ({
             name: user.name,
             messages: user.messages ?? [],
@@ -85,8 +88,10 @@ export function ChatLayout({
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
         <Chat
           messages={selectedUser.messages}
+          isTest={isTest}
           selectedUser={selectedUser}
           isMobile={isMobile}
+          selectedChatBot={selectedChatBot}
         />
       </ResizablePanel>
     </ResizablePanelGroup>

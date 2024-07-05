@@ -15,7 +15,7 @@ import { Message } from "@/data";
 import { Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-export function Sidebar({ links, isCollapsed, isMobile }) {
+export function Sidebar({ links, isCollapsed, isMobile, setIsTest }) {
   return (
     <div className="flex flex-col justify-between h-full p-2">
       <div
@@ -102,7 +102,8 @@ export function Sidebar({ links, isCollapsed, isMobile }) {
               >
                 <Avatar className="flex justify-center items-center">
                   <AvatarImage
-                    src={link.avatar}
+                    // src={link.avatar}
+                    src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
                     alt={link.avatar}
                     width={6}
                     height={6}
@@ -143,6 +144,7 @@ export function Sidebar({ links, isCollapsed, isMobile }) {
         <Button
           radius="full"
           className="bg-gradient-to-tr from-[#5046E5] to-purple-500 text-white shadow-lg mb-5 px-10 py-3"
+          onClick={() => setIsTest(true)}
         >
           Test it yourself!
         </Button>
