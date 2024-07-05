@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Divider,
@@ -19,7 +19,7 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { add_new_chatbot } from "@/services/chatbot/add-chatbot";
-import { useBotDispatch, useBotSelector } from "@/lib/hooks/rtk_hooks";
+import { useBotDispatch } from "@/lib/hooks/rtk_hooks";
 import { addChatbot } from "@/lib/features/dashboardSlice";
 import toast from "react-hot-toast";
 
