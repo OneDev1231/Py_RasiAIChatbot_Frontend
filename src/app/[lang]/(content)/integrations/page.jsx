@@ -17,6 +17,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import PhoneInput from "./_componenets/PhoneInput";
+import { setWACredentials } from "@/services/integrations/whatsApp";
 
 const categories = [
   "All",
@@ -107,6 +108,18 @@ const NavItem = ({ category, active, setActive }) => {
 
 const ModalComponent = ({ isOpen, onOpenChange }) => {
   const [phone, setPhone] = useState("+966");
+  const handleSetWACredential = async (phone_number, token) => {
+    try {
+      const result = await setWACredentials(phone_number, token);
+      if(result == 200){
+        toast.success("Credential is set successfully!");
+      }
+      else
+        toast.error("Credential is not set properly.");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <Modal
@@ -126,7 +139,7 @@ const ModalComponent = ({ isOpen, onOpenChange }) => {
               </ModalHeader>
               <form
                 className="flex w-full flex-col gap-2"
-                onSubmit={(e) => {
+                onSubmit={ (e) => {
                   e.preventDefault();
                   onClose();
                   //TODO: send the data to the server
@@ -134,6 +147,8 @@ const ModalComponent = ({ isOpen, onOpenChange }) => {
                     phone + e.target.phone.value,
                     e.target.Token.value,
                   );
+                  handleSetWACredential(e.target.phone.value, e.target.Token.value);
+
                 }}
               >
                 <label
